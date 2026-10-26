@@ -71,12 +71,6 @@ const linkData = {
             description: "Matematikkutfordringer og problemløsing for alle trinn.",
             tags: ["matematikk", "oppgaver", "logikk"],
             icon: "ikon/matematikk.png"
-        },
-        {
-            title: "Kahn Academy Norge",
-            url: "https://nb.khanacademy.org",
-            description: "Gratis videoer og øvingsoppgaver i matematikk.",
-            tags: ["video", "gratis", "matte"]
         }
     ],
     "Andre fag": [
