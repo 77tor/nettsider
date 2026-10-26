@@ -40,13 +40,15 @@ const linkData = {
             title: "Oppgavegenerator",
             url: "https://77tor.github.io/oppgave_generatorer/",
             description: "Flere ulike oppgavegeneratorer som silhuettord, gitter og ordkjeder",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
+            icon: "ikon/oppgaver.png"
         },
         {
             title: "Salaby Lesehule",
             url: "https://www.salaby.no",
             description: "Digitalt læremiddel med fokus på leseforståelse.",
-            tags: ["salaby", "tekst", "oppgaver"]
+            tags: ["salaby", "tekst", "oppgaver"],
+            icon: "ikon/salaby.png"
         }
     ],
     "Regning": [
