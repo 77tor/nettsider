@@ -14,10 +14,10 @@
     <div id="authOverlay" class="auth-overlay">
         <div class="auth-card">
             <h2>Velkommen til Lenkesamlingen</h2>
-            <p>Logg inn med din <strong>@ikrs.no</strong> Google-konto for å få tilgang.</p>
+            <p>Logg inn med din <strong>@ikrs.no</strong> e-postadresse for å få tilgang.</p>
             
             <!-- Google Sign-In Knappen -->
-            <div id="googleBtnWrapper" class="google-btn-wrapper" style="display: flex; justify-content: center; margin-top: 1.5rem;">
+            <div id="googleBtnWrapper" class="google-btn-wrapper" style="display: flex; justify-content: center; margin-bottom: 1.5rem;">
                 <div id="g_id_onload"
                     data-client_id="248555599537-8abnq12euqj6cb8i9j11v23jb6ga2enn.apps.googleusercontent.com"
                     data-context="signin"
@@ -35,9 +35,21 @@
                 </div>
             </div>
 
+            <!-- Fallback for manuell e-post innlogging -->
+            <form id="emailLoginForm" onsubmit="return false;" style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.8rem;">
+                    Eller skriv inn din e-post dersom Google-knappen er blokkert:
+                </p>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <input type="email" id="userEmailInput" class="form-input" placeholder="din-epost@ikrs.no" style="text-align: center;" required>
+                </div>
+                <button type="submit" id="emailAuthBtn" class="btn btn-primary" style="width: 100%;">Lås opp nettside</button>
+            </form>
+            
             <p id="authError" class="auth-error" style="display: none; margin-top: 1rem;"></p>
         </div>
     </div>
+
 
     <!-- Hoved-applikasjon -->
     <div id="appContainer" class="app-layout" style="display: none;">
