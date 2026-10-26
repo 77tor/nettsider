@@ -5,44 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ressurs- og Lenkesamling</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Google Identity Services SDK -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 
-    <!-- Gated Access: Innloggingsskjerm for hele siden -->
+    <!-- Innloggingsskjerm -->
     <div id="authOverlay" class="auth-overlay">
         <div class="auth-card">
             <h2>Velkommen til Lenkesamlingen</h2>
-            <p>Denne siden er kun tilgjengelig for brukere med en <strong>@ikrs.no</strong> Google-konto.</p>
+            <p>Skriv inn din <strong>@ikrs.no</strong> e-postadresse for å låse opp siden.</p>
             
-            <div id="googleBtnWrapper" class="google-btn-wrapper">
-                <!-- Google Sign-In Knappen rendres her -->
-                <div id="g_id_onload"
-                    data-client_id="DIN_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
-                    data-context="signin"
-                    data-ux_mode="popup"
-                    data-callback="handleGoogleSignIn"
-                    data-hd="ikrs.no"
-                    data-auto_prompt="false">
+            <form id="emailLoginForm" onsubmit="return false;">
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <input type="email" id="userEmailInput" class="form-input" placeholder="din-epost@ikrs.no" style="text-align: center;" required>
                 </div>
-                <div class="g_id_signin"
-                    data-type="standard"
-                    data-shape="rectangular"
-                    data-theme="outline"
-                    data-text="signin_with"
-                    data-size="large"
-                    data-logo_alignment="left">
-                </div>
-            </div>
-
-            <p id="authError" class="auth-error" style="display: none;"></p>
+                <button type="submit" id="emailAuthBtn" class="btn btn-primary" style="width: 100%;">Lås opp nettside</button>
+            </form>
+            
+            <p id="authError" class="auth-error" style="display: none; margin-top: 1rem;"></p>
         </div>
     </div>
 
-    <!-- Hovedinnhold (skjult inntil godkjent innlogging) -->
+    <!-- Hovedinnhold -->
     <div id="appContainer" class="container" style="display: none;">
-        <!-- Topplinje med brukerinfo og logg ut -->
         <div class="top-controls">
             <div id="userInfo" class="user-info"></div>
             <button id="togglePreviewBtn" class="toggle-preview-btn">
@@ -61,7 +45,7 @@
             <input type="text" id="searchInput" class="search-input" placeholder="🔍 Søk i alle lenker, oppgaver og temaer...">
         </div>
 
-        <!-- Menylinje / Fane-knapper -->
+        <!-- Menylinje / Tabs -->
         <nav class="nav-tabs" id="categoryTabs">
             <button class="tab-btn active" data-category="Lesing">Lesing</button>
             <button class="tab-btn" data-category="Regning">Regning</button>
@@ -71,7 +55,7 @@
             <button class="tab-btn admin-tab" id="adminTabBtn" data-category="Admin" style="display: none;">🔒 Admin</button>
         </nav>
 
-        <!-- Siste 5 besøkte lenker -->
+        <!-- Siste 5 besøkte -->
         <div class="recent-section" id="recentSection">
             <h3>Siste 5 besøkte lenker</h3>
             <div class="recent-links-list" id="recentLinksList">
@@ -80,16 +64,13 @@
         </div>
 
         <!-- Innholdsområde for lenkekort -->
-        <main id="cardsGrid" class="cards-grid">
-            <!-- Kortene genereres dynamisk med JavaScript -->
-        </main>
+        <main id="cardsGrid" class="cards-grid"></main>
 
         <!-- Admin område -->
         <div id="adminArea" style="display: none;">
             <div id="adminPanel" class="admin-card" style="max-width: 800px;">
                 <h2 style="margin-bottom: 1.5rem;">Administrer Lenker</h2>
 
-                <!-- Skjema for ny lenke -->
                 <form id="addLinkForm" style="margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem;">
                     <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Legg til ny lenke</h3>
                     <div class="form-group">
@@ -121,7 +102,6 @@
                     <button type="submit" class="btn btn-primary">Legg til i samlingen</button>
                 </form>
 
-                <!-- Eksportermulighet for å lagre til linkdata.js -->
                 <div>
                     <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Lagre endringer til <code>linkdata.js</code></h3>
                     <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
@@ -156,7 +136,8 @@
         <span>Hold musen over en lenke for å se nettadressen her...</span>
     </div>
 
-    <script src="linkdata.js"></script>
+    <!-- Sjekk at filnavnene matcher nøyaktig med GitHub (små bokstaver) -->
+    <script src="Linkdata.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
