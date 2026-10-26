@@ -25,95 +25,110 @@
         </div>
     </div>
 
-    <!-- Hovedinnhold -->
-    <div id="appContainer" class="container" style="display: none;">
-        <div class="top-controls">
-            <div id="userInfo" class="user-info"></div>
-            <button id="togglePreviewBtn" class="toggle-preview-btn">
-                🖼️ Bildeforhåndsvisning: <span id="previewStatusText" style="color: #38bdf8;">PÅ</span>
-            </button>
-            <button id="globalLogoutBtn" class="toggle-preview-btn btn-danger-text">Logg ut</button>
-        </div>
-
-        <header>
-            <h1>Ressurs- og Lenkesamling</h1>
-            <p>Velg et emne fra menyen eller søk etter lenker</p>
+    <!-- Hoved-applikasjon -->
+    <div id="appContainer" class="app-layout" style="display: none;">
+        
+        <!-- Topptekst / Header -->
+        <header class="top-header">
+            <div class="header-brand">
+                <h1>Ressurs- og Lenkesamling</h1>
+            </div>
+            <div class="header-user-controls">
+                <div id="userInfo" class="user-info"></div>
+                <button id="globalLogoutBtn" class="btn btn-danger-sm">Logg ut</button>
+            </div>
         </header>
 
-        <!-- Søkefelt -->
-        <div class="search-container">
-            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Søk i alle lenker, oppgaver og temaer...">
-        </div>
-
-        <!-- Menylinje / Tabs -->
-        <nav class="nav-tabs" id="categoryTabs">
-            <button class="tab-btn active" data-category="Alle">Vis alle temaer</button>
-            <button class="tab-btn" data-category="Lesing">Lesing</button>
-            <button class="tab-btn" data-category="Regning">Regning</button>
-            <button class="tab-btn" data-category="Andre fag">Andre fag</button>
-            <button class="tab-btn" data-category="Oppg. for utskrift">Oppg. for utskrift</button>
-            <button class="tab-btn" data-category="Oppg. for nett">Oppg. for nett</button>
-            <button class="tab-btn admin-tab" id="adminTabBtn" data-category="Admin" style="display: none;">🔒 Admin</button>
-        </nav>
-
-        <!-- Siste 5 besøkte -->
-        <div class="recent-section" id="recentSection">
-            <h3>Siste 5 besøkte lenker</h3>
-            <div class="recent-links-list" id="recentLinksList">
-                <span style="color: var(--text-secondary); font-size: 0.85rem;">Ingen nylig besøkte lenker ennå.</span>
-            </div>
-        </div>
-
-        <!-- Hovedområde for nedtrekksmenyer (Accordion listevisning) -->
-        <main id="accordionContainer" class="accordion-container">
-            <!-- Nedtrekksmenyene bygges dynamisk via JS -->
-        </main>
-
-        <!-- Admin område -->
-        <div id="adminArea" style="display: none;">
-            <div id="adminPanel" class="admin-card" style="max-width: 800px;">
-                <h2 style="margin-bottom: 1.5rem;">Administrer Lenker</h2>
-
-                <form id="addLinkForm" style="margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem;">
-                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Legg til ny lenke</h3>
-                    <div class="form-group">
-                        <label>Kategori</label>
-                        <select id="newCategory" class="form-select">
-                            <option value="Lesing">Lesing</option>
-                            <option value="Regning">Regning</option>
-                            <option value="Andre fag">Andre fag</option>
-                            <option value="Oppg. for utskrift">Oppg. for utskrift</option>
-                            <option value="Oppg. for nett">Oppg. for nett</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Tittel</label>
-                        <input type="text" id="newTitle" class="form-input" required placeholder="F.eks. Skrivesenteret">
-                    </div>
-                    <div class="form-group">
-                        <label>Nettadresse (URL)</label>
-                        <input type="url" id="newUrl" class="form-input" required placeholder="https://...">
-                    </div>
-                    <div class="form-group">
-                        <label>Beskrivelse</label>
-                        <input type="text" id="newDesc" class="form-input" placeholder="Kort beskrivelse...">
-                    </div>
-                    <div class="form-group">
-                        <label>Emneknagger / Tags (komma-separert)</label>
-                        <input type="text" id="newTags" class="form-input" placeholder="f.eks. norsk, skriving, oppgaver">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Legg til i samlingen</button>
-                </form>
-
-                <div>
-                    <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Lagre endringer til <code>linkdata.js</code></h3>
-                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
-                        Kopier koden under og lim den inn i din <code>linkdata.js</code>-fil for å lagre endringene permanent.
-                    </p>
-                    <textarea id="exportCode" class="form-textarea" rows="8" readonly style="font-family: monospace; font-size: 0.8rem;"></textarea>
-                    <button id="copyExportBtn" class="btn btn-primary btn-sm" style="margin-top: 0.5rem;">Kopier kode</button>
+        <!-- Hovedområde med Sidebar + Innhold -->
+        <div class="main-wrapper">
+            
+            <!-- Venstremeny (Sidebar) -->
+            <aside class="sidebar">
+                <!-- Søkefelt -->
+                <div class="sidebar-section">
+                    <label class="sidebar-label">Søk i lenker</label>
+                    <input type="text" id="searchInput" class="search-input" placeholder="🔍 Søk tema, tittel...">
                 </div>
-            </div>
+
+                <!-- Bildeforhåndsvisning-knapp -->
+                <div class="sidebar-section">
+                    <button id="togglePreviewBtn" class="toggle-preview-btn">
+                        🖼️ Forhåndsvisning: <span id="previewStatusText" style="color: #38bdf8;">PÅ</span>
+                    </button>
+                </div>
+
+                <!-- Siste 5 besøkte lenker -->
+                <div class="sidebar-section recent-section" id="recentSection">
+                    <h3>Siste 5 besøkte</h3>
+                    <div class="recent-links-list" id="recentLinksList">
+                        <span style="color: var(--text-secondary); font-size: 0.8rem;">Ingen nylig besøkte lenker ennå.</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Høyre side: Kategori-tabs og innhold -->
+            <main class="content-area">
+                <!-- Menylinje / Tabs -->
+                <nav class="nav-tabs" id="categoryTabs">
+                    <button class="tab-btn active" data-category="Alle">Vis alle temaer</button>
+                    <button class="tab-btn" data-category="Lesing">Lesing</button>
+                    <button class="tab-btn" data-category="Regning">Regning</button>
+                    <button class="tab-btn" data-category="Andre fag">Andre fag</button>
+                    <button class="tab-btn" data-category="Oppg. for utskrift">Oppg. for utskrift</button>
+                    <button class="tab-btn" data-category="Oppg. for nett">Oppg. for nett</button>
+                    <button class="tab-btn admin-tab" id="adminTabBtn" data-category="Admin" style="display: none;">🔒 Admin</button>
+                </nav>
+
+                <!-- Nedtrekksmenyer (Accordion) -->
+                <div id="accordionContainer" class="accordion-container"></div>
+
+                <!-- Admin område -->
+                <div id="adminArea" style="display: none;">
+                    <div id="adminPanel" class="admin-card">
+                        <h2 style="margin-bottom: 1.5rem;">Administrer Lenker</h2>
+
+                        <form id="addLinkForm" style="margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem;">
+                            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Legg til ny lenke</h3>
+                            <div class="form-group">
+                                <label>Kategori</label>
+                                <select id="newCategory" class="form-select">
+                                    <option value="Lesing">Lesing</option>
+                                    <option value="Regning">Regning</option>
+                                    <option value="Andre fag">Andre fag</option>
+                                    <option value="Oppg. for utskrift">Oppg. for utskrift</option>
+                                    <option value="Oppg. for nett">Oppg. for nett</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tittel</label>
+                                <input type="text" id="newTitle" class="form-input" required placeholder="F.eks. Skrivesenteret">
+                            </div>
+                            <div class="form-group">
+                                <label>Nettadresse (URL)</label>
+                                <input type="url" id="newUrl" class="form-input" required placeholder="https://...">
+                            </div>
+                            <div class="form-group">
+                                <label>Beskrivelse</label>
+                                <input type="text" id="newDesc" class="form-input" placeholder="Kort beskrivelse...">
+                            </div>
+                            <div class="form-group">
+                                <label>Emneknagger / Tags (komma-separert)</label>
+                                <input type="text" id="newTags" class="form-input" placeholder="f.eks. norsk, skriving, oppgaver">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Legg til i samlingen</button>
+                        </form>
+
+                        <div>
+                            <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Lagre endringer til <code>linkdata.js</code></h3>
+                            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
+                                Kopier koden under og lim den inn i din <code>linkdata.js</code>-fil for å lagre endringene permanent.
+                            </p>
+                            <textarea id="exportCode" class="form-textarea" rows="8" readonly style="font-family: monospace; font-size: 0.8rem;"></textarea>
+                            <button id="copyExportBtn" class="btn btn-primary btn-sm" style="margin-top: 0.5rem;">Kopier kode</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
     </div>
 

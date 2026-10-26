@@ -24,108 +24,180 @@ body {
     color: var(--text-primary);
     line-height: 1.5;
     min-height: 100vh;
-    padding-bottom: 70px;
+    padding-bottom: 45px;
 }
 
-.container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-    position: relative;
+/* App Layout */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* Toppkontroller */
-.top-controls {
+/* Topptekst (Header) */
+.top-header {
+    background: rgba(30, 41, 59, 0.8);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.8rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.header-brand h1 {
+    font-size: 1.4rem;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-indigo));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-user-controls {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    margin-bottom: 1rem;
+    gap: 1rem;
 }
 
 .user-info {
     font-size: 0.85rem;
     color: var(--text-secondary);
-    margin-right: auto;
 }
 
-.toggle-preview-btn {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    padding: 0.4rem 0.9rem;
-    border-radius: 20px;
-    font-size: 0.82rem;
+.btn-danger-sm {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: var(--accent-red);
+    padding: 0.35rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.toggle-preview-btn:hover {
-    background: var(--bg-card-hover);
-    color: var(--text-primary);
+.btn-danger-sm:hover {
+    background: var(--accent-red);
+    color: white;
 }
 
-.btn-danger-text {
-    color: var(--accent-red) !important;
+/* Main Wrapper (Sidebar + Content) */
+.main-wrapper {
+    display: flex;
+    flex: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 1.5rem;
+    gap: 1.5rem;
 }
 
-header {
-    margin-bottom: 2rem;
-    text-align: center;
+/* Venstremeny (Sidebar) */
+.sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
 }
 
-header h1 {
-    font-size: 2.2rem;
-    background: linear-gradient(135deg, var(--accent-blue), var(--accent-indigo));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 0.5rem;
+.sidebar-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
 }
 
-header p {
+.sidebar-label {
+    display: block;
+    font-size: 0.8rem;
     color: var(--text-secondary);
-}
-
-.search-container {
-    margin-bottom: 2rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .search-input {
     width: 100%;
-    padding: 0.8rem 1.2rem;
-    border-radius: 12px;
+    padding: 0.65rem 0.9rem;
+    border-radius: 8px;
     border: 1px solid var(--border-color);
     background: rgba(15, 23, 42, 0.6);
     color: var(--text-primary);
-    font-size: 1rem;
+    font-size: 0.9rem;
     outline: none;
-    transition: all 0.3s ease;
+    transition: border-color 0.2s ease;
 }
 
 .search-input:focus {
     border-color: var(--accent-blue);
-    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+
+.toggle-preview-btn {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: left;
+    font-weight: 500;
+}
+
+/* Siste 5 besøkte i sidebar */
+.recent-section h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+}
+
+.recent-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.recent-chip {
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.15);
+    color: var(--accent-blue);
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background 0.2s ease;
+}
+
+.recent-chip:hover {
+    background: rgba(56, 189, 248, 0.2);
+}
+
+/* Høyre side (Content area) */
+.content-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
 }
 
 .nav-tabs {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    justify-content: center;
-    margin-bottom: 2rem;
 }
 
 .tab-btn {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
-    padding: 0.6rem 1.2rem;
-    border-radius: 10px;
+    padding: 0.55rem 1.1rem;
+    border-radius: 8px;
     cursor: pointer;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     transition: all 0.2s ease;
 }
 
@@ -140,61 +212,22 @@ header p {
     border-color: transparent;
 }
 
-/* Siste 5 besøkte */
-.recent-section {
-    background: rgba(30, 41, 59, 0.4);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 0.9rem 1.2rem;
-    margin-bottom: 2rem;
-}
-
-.recent-section h3 {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-secondary);
-    margin-bottom: 0.6rem;
-}
-
-.recent-links-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.recent-chip {
-    background: rgba(56, 189, 248, 0.1);
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    color: var(--accent-blue);
-    padding: 0.3rem 0.7rem;
-    border-radius: 20px;
-    text-decoration: none;
-    font-size: 0.82rem;
-    transition: all 0.2s ease;
-}
-
-.recent-chip:hover {
-    background: rgba(56, 189, 248, 0.2);
-}
-
-/* Accordion Nedtrekksmeny-struktur */
+/* Accordion */
 .accordion-container {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.8rem;
 }
 
 .accordion-item {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 10px;
     overflow: hidden;
-    transition: border-color 0.2s ease;
 }
 
 .accordion-header {
-    padding: 1rem 1.4rem;
+    padding: 0.85rem 1.2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -209,7 +242,7 @@ header p {
 }
 
 .accordion-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -219,14 +252,14 @@ header p {
 .accordion-badge {
     background: rgba(56, 189, 248, 0.15);
     color: var(--accent-blue);
-    font-size: 0.75rem;
-    padding: 0.15rem 0.6rem;
-    border-radius: 12px;
+    font-size: 0.72rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 10px;
     font-weight: 500;
 }
 
 .accordion-icon {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
     transition: transform 0.3s ease;
 }
@@ -239,7 +272,7 @@ header p {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
-    background: rgba(15, 23, 42, 0.4);
+    background: rgba(15, 23, 42, 0.3);
 }
 
 .accordion-item.open .accordion-body {
@@ -250,19 +283,19 @@ header p {
 .link-list {
     display: flex;
     flex-direction: column;
-    padding: 0.5rem 1rem 1rem 1rem;
+    padding: 0.4rem 0.8rem 0.8rem 0.8rem;
 }
 
 .link-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
+    padding: 0.7rem 0.8rem;
+    border-radius: 6px;
     text-decoration: none;
     color: inherit;
     transition: background 0.2s ease;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
 }
 
 .link-row:last-child {
@@ -281,8 +314,8 @@ header p {
 }
 
 .link-favicon {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     border-radius: 3px;
     flex-shrink: 0;
 }
@@ -293,26 +326,26 @@ header p {
 }
 
 .link-title {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--text-primary);
 }
 
 .link-desc {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
 }
 
 .link-right {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
 .tag {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     background: rgba(255, 255, 255, 0.05);
-    padding: 0.15rem 0.5rem;
+    padding: 0.12rem 0.45rem;
     border-radius: 4px;
     color: var(--text-secondary);
 }
@@ -321,43 +354,37 @@ header p {
 .admin-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 14px;
-    padding: 2rem;
-    margin: 0 auto;
+    border-radius: 12px;
+    padding: 1.8rem;
 }
 
 .form-group {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.4rem;
-    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    font-size: 0.85rem;
     color: var(--text-secondary);
 }
 
 .form-input, .form-select, .form-textarea {
     width: 100%;
-    padding: 0.7rem;
-    border-radius: 8px;
+    padding: 0.6rem;
+    border-radius: 6px;
     border: 1px solid var(--border-color);
     background: rgba(15, 23, 42, 0.8);
     color: var(--text-primary);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
 .btn {
-    padding: 0.7rem 1.4rem;
-    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
     border: none;
     font-weight: 600;
     cursor: pointer;
-    transition: opacity 0.2s ease;
-}
-
-.btn:hover {
-    opacity: 0.9;
 }
 
 .btn-primary {
@@ -372,7 +399,7 @@ header p {
 
 .btn-sm {
     padding: 0.3rem 0.6rem;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
 }
 
 /* Overlay logg inn */
@@ -392,13 +419,13 @@ header p {
     border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 2.5rem;
-    max-width: 450px;
+    max-width: 420px;
     width: 100%;
     text-align: center;
 }
 
 .auth-card h2 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin-bottom: 0.8rem;
     background: linear-gradient(135deg, var(--accent-blue), var(--accent-indigo));
     -webkit-background-clip: text;
@@ -407,7 +434,7 @@ header p {
 
 .auth-card p {
     color: var(--text-secondary);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     margin-bottom: 1.5rem;
 }
 
@@ -419,11 +446,11 @@ header p {
 /* Tooltip Hover Preview */
 .hover-preview-card {
     position: fixed;
-    width: 330px;
-    height: 250px;
+    width: 320px;
+    height: 240px;
     background: #1e293b;
     border: 1px solid rgba(56, 189, 248, 0.4);
-    border-radius: 12px;
+    border-radius: 10px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.6);
     overflow: hidden;
     pointer-events: none;
@@ -442,7 +469,7 @@ header p {
 
 .hover-preview-header {
     background: #0f172a;
-    padding: 0.5rem 0.8rem;
+    padding: 0.4rem 0.7rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -455,7 +482,7 @@ header p {
 }
 
 .hover-title {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 600;
     color: var(--text-primary);
     white-space: nowrap;
@@ -512,19 +539,29 @@ header p {
     display: none;
 }
 
+.hover-url {
+    background: #0f172a;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.75rem;
+    color: var(--accent-blue);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .url-preview-bar {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 38px;
+    height: 35px;
     background: rgba(15, 23, 42, 0.95);
     border-top: 1px solid var(--border-color);
     backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
-    padding: 0 1.5rem;
-    font-size: 0.85rem;
+    padding: 0 1.2rem;
+    font-size: 0.82rem;
     color: var(--accent-blue);
     z-index: 1000;
 }

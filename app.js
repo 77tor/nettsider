@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function checkAuthStatus() {
     if (currentUser) {
         authOverlay.style.display = 'none';
-        appContainer.style.display = 'block';
+        appContainer.style.display = 'flex';
         userInfo.innerHTML = `👤 ${currentUser.name} (${currentUser.email})`;
         
         if (currentUser.isAdmin) {
@@ -123,8 +123,8 @@ function setupEventListeners() {
     document.addEventListener('mousemove', (e) => {
         if (!hoverPreviewCard.classList.contains('visible')) return;
 
-        const cardWidth = 330;
-        const cardHeight = 250;
+        const cardWidth = 320;
+        const cardHeight = 240;
         const padding = 15;
 
         let left = e.clientX + padding;
@@ -271,7 +271,7 @@ function createLinkRow(item, category, index) {
     return a;
 }
 
-// Bildeforhåndsvisning (Filtrerer bort beskyttede Google-sider)
+// Bildeforhåndsvisning
 function showHoverPreview(item, event) {
     if (item.url.includes('sites.google.com') || item.url.includes('drive.google.com') || item.url.includes('docs.google.com')) {
         return;
@@ -326,7 +326,7 @@ function addRecentLink(item) {
 function renderRecentLinks() {
     const recent = JSON.parse(localStorage.getItem('recentLinks')) || [];
     if (recent.length === 0) {
-        recentLinksList.innerHTML = `<span style="color: var(--text-secondary); font-size: 0.85rem;">Ingen nylig besøkte lenker ennå.</span>`;
+        recentLinksList.innerHTML = `<span style="color: var(--text-secondary); font-size: 0.8rem;">Ingen nylig besøkte lenker ennå.</span>`;
         return;
     }
 
