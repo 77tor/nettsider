@@ -1,28 +1,10 @@
-// Håndter e-postinnlogging
-document.getElementById('emailLoginForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const input = document.getElementById('userEmailInput').value.trim().toLowerCase();
-    
-    if (input.endsWith('@ikrs.no') || ADMIN_EMAILS.includes(input)) {
-        currentUser = {
-            name: input.split('@')[0],
-            email: input,
-            isAdmin: ADMIN_EMAILS.includes(input)
-        };
-        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-        checkAuthStatus();
-    } else {
-        showAuthError("Kun e-postadresser som slutter på @ikrs.no har tilgang.");
-    }
-});
-
-// Applikasjonstilstand
-let currentCategory = "Lesing";
+// Tilstand
+let currentCategory = "Alle";
 let activeData = JSON.parse(localStorage.getItem('myLinkData')) || linkData;
 let currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || null;
 let previewEnabled = true;
 
-// DOM-elementer
+// DOM Elementer
 const authOverlay = document.getElementById('authOverlay');
 const appContainer = document.getElementById('appContainer');
 const authError = document.getElementById('authError');
@@ -30,7 +12,7 @@ const userInfo = document.getElementById('userInfo');
 const globalLogoutBtn = document.getElementById('globalLogoutBtn');
 const adminTabBtn = document.getElementById('adminTabBtn');
 
-const cardsGrid = document.getElementById('cardsGrid');
+const accordionContainer = document.getElementById('accordionContainer');
 const categoryTabs = document.getElementById('categoryTabs');
 const searchInput = document.getElementById('searchInput');
 const urlPreviewBar = document.getElementById('urlPreviewBar');
@@ -58,67 +40,19 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
-// Dekode Google JWT Token
-function parseJwt(token) {
-    try {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-        return JSON.parse(jsonPayload);
-    } catch (e) {
-        return null;
-    }
-}
-
-// Global Callback for Google Sign-In
-window.handleGoogleSignIn = function(response) {
-    const payload = parseJwt(response.credential);
-    
-    if (!payload || !payload.email) {
-        showAuthError("Kunne ikke verifisere Google-innlogging.");
-        return;
-    }
-
-    const email = payload.email.toLowerCase();
-    const domain = email.split('@')[1];
-
-    // Sjekk domene eller om det er en av de eksplisitte admin-adressene
-    if (domain === 'ikrs.no' || ADMIN_EMAILS.includes(email)) {
-        currentUser = {
-            name: payload.name,
-            email: email,
-            picture: payload.picture,
-            isAdmin: ADMIN_EMAILS.includes(email)
-        };
-        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-        checkAuthStatus();
-    } else {
-        showAuthError(`Tilgang nektet: (${email}). Kun @ikrs.no e-poster har tilgang.`);
-    }
-};
-
-function showAuthError(msg) {
-    authError.innerText = msg;
-    authError.style.display = 'block';
-}
-
 function checkAuthStatus() {
     if (currentUser) {
         authOverlay.style.display = 'none';
         appContainer.style.display = 'block';
-        
         userInfo.innerHTML = `👤 ${currentUser.name} (${currentUser.email})`;
         
-        // Vis Admin-fane kun hvis brukeren er godkjent admin
         if (currentUser.isAdmin) {
             adminTabBtn.style.display = 'inline-block';
         } else {
             adminTabBtn.style.display = 'none';
         }
 
-        renderCards();
+        renderAccordion();
         renderRecentLinks();
     } else {
         authOverlay.style.display = 'flex';
@@ -126,14 +60,30 @@ function checkAuthStatus() {
     }
 }
 
-function handleLogout() {
-    sessionStorage.removeItem('currentUser');
-    currentUser = null;
-    checkAuthStatus();
-}
-
 function setupEventListeners() {
-    globalLogoutBtn.addEventListener('click', handleLogout);
+    // Innlogging
+    document.getElementById('emailLoginForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = document.getElementById('userEmailInput').value.trim().toLowerCase();
+        
+        if (input.endsWith('@ikrs.no') || ADMIN_EMAILS.includes(input)) {
+            currentUser = {
+                name: input.split('@')[0],
+                email: input,
+                isAdmin: ADMIN_EMAILS.includes(input)
+            };
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            checkAuthStatus();
+        } else {
+            showAuthError("Kun e-postadresser som slutter på @ikrs.no har tilgang.");
+        }
+    });
+
+    globalLogoutBtn.addEventListener('click', () => {
+        sessionStorage.removeItem('currentUser');
+        currentUser = null;
+        checkAuthStatus();
+    });
 
     togglePreviewBtn.addEventListener('click', () => {
         previewEnabled = !previewEnabled;
@@ -142,6 +92,7 @@ function setupEventListeners() {
         if (!previewEnabled) hideHoverPreview();
     });
 
+    // Menytabs
     categoryTabs.addEventListener('click', (e) => {
         if (!e.target.classList.contains('tab-btn')) return;
         
@@ -151,26 +102,24 @@ function setupEventListeners() {
         currentCategory = e.target.dataset.category;
         
         if (currentCategory === 'Admin') {
-            cardsGrid.style.display = 'none';
+            accordionContainer.style.display = 'none';
             adminArea.style.display = 'block';
             updateExportCode();
         } else {
-            cardsGrid.style.display = 'grid';
+            accordionContainer.style.display = 'flex';
             adminArea.style.display = 'none';
             searchInput.value = '';
-            renderCards();
+            renderAccordion();
         }
     });
 
+    // Søk
     searchInput.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase().trim();
-        if (query.length > 0) {
-            renderSearchResults(query);
-        } else {
-            renderCards();
-        }
+        renderAccordion(query);
     });
 
+    // Mus-bevegelse for forhåndsvisningskort
     document.addEventListener('mousemove', (e) => {
         if (!hoverPreviewCard.classList.contains('visible')) return;
 
@@ -181,12 +130,8 @@ function setupEventListeners() {
         let left = e.clientX + padding;
         let top = e.clientY + padding;
 
-        if (left + cardWidth > window.innerWidth) {
-            left = e.clientX - cardWidth - padding;
-        }
-        if (top + cardHeight > window.innerHeight) {
-            top = e.clientY - cardHeight - padding;
-        }
+        if (left + cardWidth > window.innerWidth) left = e.clientX - cardWidth - padding;
+        if (top + cardHeight > window.innerHeight) top = e.clientY - cardHeight - padding;
 
         hoverPreviewCard.style.left = `${left}px`;
         hoverPreviewCard.style.top = `${top}px`;
@@ -201,68 +146,114 @@ function setupEventListeners() {
     });
 }
 
-function renderCards() {
-    const links = activeData[currentCategory] || [];
-    cardsGrid.innerHTML = '';
-
-    if (links.length === 0) {
-        cardsGrid.innerHTML = `<p style="color: var(--text-secondary); grid-column: 1/-1;">Ingen lenker i denne kategorien ennå.</p>`;
-        return;
-    }
-
-    links.forEach((item, index) => {
-        const card = createCardElement(item, currentCategory, index);
-        cardsGrid.appendChild(card);
-    });
+function showAuthError(msg) {
+    authError.innerText = msg;
+    authError.style.display = 'block';
 }
 
-function renderSearchResults(query) {
-    cardsGrid.innerHTML = '';
-    let matchesCount = 0;
+// Render nedtrekksmenyer (Accordion)
+function renderAccordion(searchQuery = '') {
+    accordionContainer.innerHTML = '';
+    
+    const categoriesToRender = (currentCategory === 'Alle') 
+        ? Object.keys(activeData) 
+        : [currentCategory];
 
-    Object.keys(activeData).forEach(cat => {
-        activeData[cat].forEach((item, index) => {
-            const matchesTitle = item.title.toLowerCase().includes(query);
-            const matchesDesc = item.description.toLowerCase().includes(query);
-            const matchesUrl = item.url.toLowerCase().includes(query);
-            const matchesTags = item.tags && item.tags.some(t => t.toLowerCase().includes(query));
+    let hasMatches = false;
 
-            if (matchesTitle || matchesDesc || matchesUrl || matchesTags) {
-                const card = createCardElement(item, cat, index);
-                cardsGrid.appendChild(card);
-                matchesCount++;
-            }
+    categoriesToRender.forEach(catName => {
+        let links = activeData[catName] || [];
+
+        if (searchQuery) {
+            links = links.filter(item => {
+                return item.title.toLowerCase().includes(searchQuery) ||
+                       (item.description && item.description.toLowerCase().includes(searchQuery)) ||
+                       item.url.toLowerCase().includes(searchQuery) ||
+                       (item.tags && item.tags.some(t => t.toLowerCase().includes(searchQuery)));
+            });
+        }
+
+        if (links.length === 0 && searchQuery) return;
+
+        hasMatches = true;
+
+        const itemEl = document.createElement('div');
+        itemEl.className = `accordion-item ${searchQuery || currentCategory !== 'Alle' ? 'open' : ''}`;
+
+        const headerEl = document.createElement('div');
+        headerEl.className = 'accordion-header';
+        headerEl.innerHTML = `
+            <div class="accordion-title">
+                📁 ${catName}
+                <span class="accordion-badge">${links.length} lenker</span>
+            </div>
+            <span class="accordion-icon">▼</span>
+        `;
+
+        headerEl.addEventListener('click', () => {
+            itemEl.classList.toggle('open');
         });
+
+        const bodyEl = document.createElement('div');
+        bodyEl.className = 'accordion-body';
+
+        const listEl = document.createElement('div');
+        listEl.className = 'link-list';
+
+        if (links.length === 0) {
+            listEl.innerHTML = `<p style="padding: 0.8rem; color: var(--text-secondary); font-size: 0.85rem;">Ingen lenker her ennå.</p>`;
+        } else {
+            links.forEach((item, index) => {
+                const linkRow = createLinkRow(item, catName, index);
+                listEl.appendChild(linkRow);
+            });
+        }
+
+        bodyEl.appendChild(listEl);
+        itemEl.appendChild(headerEl);
+        itemEl.appendChild(bodyEl);
+        accordionContainer.appendChild(itemEl);
     });
 
-    if (matchesCount === 0) {
-        cardsGrid.innerHTML = `<p style="color: var(--text-secondary); grid-column: 1/-1;">Ingen lenker matchet søket "${query}".</p>`;
+    if (!hasMatches && searchQuery) {
+        accordionContainer.innerHTML = `<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">Ingen lenker matchet søket "${searchQuery}".</p>`;
     }
 }
 
-function createCardElement(item, category, index) {
+// Lag én enkelt rad i listevisningen
+function createLinkRow(item, category, index) {
     const a = document.createElement('a');
-    a.className = 'card';
+    a.className = 'link-row';
     a.href = item.url;
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
+
+    let domain = '';
+    try { domain = new URL(item.url).hostname; } catch(e) {}
+    const faviconUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=32` : '';
 
     const tagsHtml = (item.tags || []).map(t => `<span class="tag">#${t}</span>`).join('');
 
     let deleteBtnHtml = '';
     if (currentUser && currentUser.isAdmin && currentCategory === 'Admin') {
-        deleteBtnHtml = `<button class="btn btn-danger btn-sm" onclick="deleteLink('${category}', ${index}, event)" style="position: absolute; top: 10px; right: 10px;">Slett</button>`;
+        deleteBtnHtml = `<button class="btn btn-danger btn-sm" onclick="deleteLink('${category}', ${index}, event)">Slett</button>`;
     }
 
     a.innerHTML = `
-        ${deleteBtnHtml}
-        <div>
-            <div class="card-title">${item.title}</div>
-            <div class="card-desc">${item.description || ''}</div>
+        <div class="link-left">
+            <img class="link-favicon" src="${faviconUrl}" alt="">
+            <div class="link-info">
+                <span class="link-title">${item.title}</span>
+                <span class="link-desc">${item.description || item.url}</span>
+            </div>
         </div>
-        <div class="card-tags">${tagsHtml}</div>
+        <div class="link-right">
+            ${tagsHtml}
+            ${deleteBtnHtml}
+        </div>
     `;
 
+    // Hover effekter for URL Bar & Bildeforhåndsvisning
     a.addEventListener('mouseenter', (e) => {
         urlPreviewBar.innerHTML = `<span>🔗 <strong>${item.title}:</strong> ${item.url}</span>`;
         if (previewEnabled) showHoverPreview(item, e);
@@ -280,7 +271,12 @@ function createCardElement(item, category, index) {
     return a;
 }
 
+// Bildeforhåndsvisning (Filtrerer bort beskyttede Google-sider)
 function showHoverPreview(item, event) {
+    if (item.url.includes('sites.google.com') || item.url.includes('drive.google.com') || item.url.includes('docs.google.com')) {
+        return;
+    }
+
     hoverTitle.innerText = item.title;
     hoverUrl.innerText = item.url;
     
@@ -294,15 +290,11 @@ function showHoverPreview(item, event) {
     previewLoader.style.opacity = '1';
     hoverImage.style.display = 'block';
     hoverIframe.style.display = 'none';
-    hoverIframe.src = '';
 
     const screenshotUrl = `https://api.microlink.io/?url=${encodeURIComponent(item.url)}&screenshot=true&embed=screenshot.url`;
     hoverImage.src = screenshotUrl;
 
-    hoverImage.onload = () => {
-        previewLoader.style.opacity = '0';
-    };
-
+    hoverImage.onload = () => { previewLoader.style.opacity = '0'; };
     hoverImage.onerror = () => {
         hoverImage.style.display = 'none';
         hoverIframe.style.display = 'block';
@@ -375,7 +367,7 @@ function deleteLink(cat, index, e) {
     if (confirm('Er du sikker på at du vil slette denne lenken?')) {
         activeData[cat].splice(index, 1);
         localStorage.setItem('myLinkData', JSON.stringify(activeData));
-        renderCards();
+        renderAccordion();
         updateExportCode();
     }
 }

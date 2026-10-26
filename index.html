@@ -12,7 +12,7 @@
     <div id="authOverlay" class="auth-overlay">
         <div class="auth-card">
             <h2>Velkommen til Lenkesamlingen</h2>
-            <p>Skriv inn din <strong>@ikrs.no</strong> e-postadresse for å låse opp siden.</p>
+            <p>Skriv inn din <strong>@ikrs.no</strong> e-postadresse for å få tilgang.</p>
             
             <form id="emailLoginForm" onsubmit="return false;">
                 <div class="form-group" style="margin-bottom: 1rem;">
@@ -47,7 +47,8 @@
 
         <!-- Menylinje / Tabs -->
         <nav class="nav-tabs" id="categoryTabs">
-            <button class="tab-btn active" data-category="Lesing">Lesing</button>
+            <button class="tab-btn active" data-category="Alle">Vis alle temaer</button>
+            <button class="tab-btn" data-category="Lesing">Lesing</button>
             <button class="tab-btn" data-category="Regning">Regning</button>
             <button class="tab-btn" data-category="Andre fag">Andre fag</button>
             <button class="tab-btn" data-category="Oppg. for utskrift">Oppg. for utskrift</button>
@@ -63,8 +64,10 @@
             </div>
         </div>
 
-        <!-- Innholdsområde for lenkekort -->
-        <main id="cardsGrid" class="cards-grid"></main>
+        <!-- Hovedområde for nedtrekksmenyer (Accordion listevisning) -->
+        <main id="accordionContainer" class="accordion-container">
+            <!-- Nedtrekksmenyene bygges dynamisk via JS -->
+        </main>
 
         <!-- Admin område -->
         <div id="adminArea" style="display: none;">
@@ -136,7 +139,6 @@
         <span>Hold musen over en lenke for å se nettadressen her...</span>
     </div>
 
-    <!-- Sjekk at filnavnene matcher nøyaktig med GitHub (små bokstaver) -->
     <script src="Linkdata.js"></script>
     <script src="app.js"></script>
 </body>
