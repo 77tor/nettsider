@@ -1,3 +1,21 @@
+// Håndter e-postinnlogging
+document.getElementById('emailLoginForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = document.getElementById('userEmailInput').value.trim().toLowerCase();
+    
+    if (input.endsWith('@ikrs.no') || ADMIN_EMAILS.includes(input)) {
+        currentUser = {
+            name: input.split('@')[0],
+            email: input,
+            isAdmin: ADMIN_EMAILS.includes(input)
+        };
+        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+        checkAuthStatus();
+    } else {
+        showAuthError("Kun e-postadresser som slutter på @ikrs.no har tilgang.");
+    }
+});
+
 // Applikasjonstilstand
 let currentCategory = "Lesing";
 let activeData = JSON.parse(localStorage.getItem('myLinkData')) || linkData;
