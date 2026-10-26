@@ -37,6 +37,12 @@ const linkData = {
             tags: ["lesing", "norsk", "barneskole"]
         },
         {
+            title: "Oppgavegenerator",
+            url: "https://77tor.github.io/oppgave_generatorer/",
+            description: "Flere ulike oppgavegeneratorer som silhuettord, gitter og ordkjeder",
+            tags: ["lesing", "norsk", "barneskole"]
+        },
+        {
             title: "Salaby Lesehule",
             url: "https://www.salaby.no",
             description: "Digitalt læremiddel med fokus på leseforståelse.",
@@ -73,17 +79,60 @@ const linkData = {
     ],
     "Oppg. for utskrift": [
         {
-            title: "Oppgavegenerator Math-Drills",
-            url: "https://www.math-drills.com",
-            description: "Utskriftsvennlige arbeidsark i matematikk (PDF).",
-            tags: ["pdf", "print", "arbeidsark"]
+            title: "Bingo",
+            url: "https://77tor.github.io/bingo/",
+            description: "Skriv ut bingoark",
+            tags: ["lesing", "norsk", "barneskole"]
         },
         {
-            title: "Skrivesider for utskrift",
-            url: "https://www.kugoo.no",
-            description: "Arbeidsark for bokstavtrening og skriving.",
-            tags: ["skriving", "print", "norsk"]
+            title: "Finn ordet",
+            url: "https://77tor.github.io/finn_ordet/",
+            description: "Skriv ut ark for å pare bilder og ord",
+            tags: ["lesing", "norsk", "barneskole"]
+        },
+        {
+            title: "Gitter",
+            url: "https://77tor.github.io/gitter/",
+            description: "Lag gitter av flere ord",
+            tags: ["lesing", "norsk", "barneskole"]
+        },
+        {
+            title: "Ordkjeder",
+            url: "https://77tor.github.io/ordkjeder/",
+            description: "Arbeid med å kunne lese ord",
+            tags: ["lesing", "norsk", "barneskole"]
+        },
+        {
+            title: "Ordsøk",
+            url: "https://77tor.github.io/ord-sok/",
+            description: "Finn ord i en mengde bokstaver",
+            tags: ["lesing", "norsk", "barneskole"]
+        },
+        {
+            title: "Puslehistorier",
+            url: "https://77tor.github.io/puslehistorier/",
+            description: "Sett sammen ord/bilder til fortellinger",
+            tags: ["lesing", "norsk", "barneskole"]
+        },
+        {
+            title: "Silhuettord",
+            url: "https://77tor.github.io/Silhuettord/",
+            description: "Lag silhuetter av ulike ord",
+            tags: ["lesing", "norsk", "barneskole"]
+        },
+        {
+            title: "Stavelser",
+            url: "https://77tor.github.io/Stavelser/",
+            description: "Arbeid med stavelser",
+            tags: ["lesing", "norsk", "barneskole"]
+        },
+        {
+            title: "Synonymer",
+            url: "https://77tor.github.io/synonymer/",
+            description: "Arbeid med synonymer",
+            tags: ["lesing", "norsk", "barneskole"]
         }
+
     ],
     "Oppg. for nett": [
         {
