@@ -1,3 +1,9 @@
+// --- ALL TILSTAND OG VARIABLER ÅPNES ØVERST FOR Å UNNGÅ REFERENCEERROR ---
+let currentCategory = "Alle";
+let activeData = (typeof linkData !== 'undefined') ? (JSON.parse(localStorage.getItem('myLinkData')) || linkData) : {};
+let currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || null;
+let previewEnabled = true;
+
 // Dekode Google Token (JWT)
 function parseJwt(token) {
     try {
@@ -40,81 +46,87 @@ function processLogin(emailInput, displayName = '') {
     }
 }
 
-// Tilstand
-let currentCategory = "Alle";
-let activeData = JSON.parse(localStorage.getItem('myLinkData')) || linkData;
-let currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || null;
-let previewEnabled = true;
-
 // DOM Elementer
-const authOverlay = document.getElementById('authOverlay');
-const appContainer = document.getElementById('appContainer');
-const authError = document.getElementById('authError');
-const userInfo = document.getElementById('userInfo');
-const globalLogoutBtn = document.getElementById('globalLogoutBtn');
-const adminTabBtn = document.getElementById('adminTabBtn');
-
-const emailLoginForm = document.getElementById('emailLoginForm');
-const userEmailInput = document.getElementById('userEmailInput');
-
-const accordionContainer = document.getElementById('accordionContainer');
-const adminAccordionContainer = document.getElementById('adminAccordionContainer');
-const categoryTabs = document.getElementById('categoryTabs');
-const searchInput = document.getElementById('searchInput');
-const urlPreviewBar = document.getElementById('urlPreviewBar');
-const recentLinksList = document.getElementById('recentLinksList');
-
-const togglePreviewBtn = document.getElementById('togglePreviewBtn');
-const previewStatusText = document.getElementById('previewStatusText');
-
-const hoverPreviewCard = document.getElementById('hoverPreviewCard');
-const hoverFavicon = document.getElementById('hoverFavicon');
-const hoverTitle = document.getElementById('hoverTitle');
-const hoverImage = document.getElementById('hoverImage');
-const hoverIframe = document.getElementById('hoverIframe');
-const hoverUrl = document.getElementById('hoverUrl');
-const previewLoader = document.getElementById('previewLoader');
-
-const adminArea = document.getElementById('adminArea');
-const addLinkForm = document.getElementById('addLinkForm');
-const addModal = document.getElementById('addModal');
-const openAddModalBtn = document.getElementById('openAddModalBtn');
-const closeAddModalBtn = document.getElementById('closeAddModalBtn');
-const generateCodeBtn = document.getElementById('generateCodeBtn');
-const exportCodeTextarea = document.getElementById('exportCode');
+let authOverlay, appContainer, authError, userInfo, globalLogoutBtn, adminTabBtn;
+let emailLoginForm, userEmailInput, accordionContainer, adminAccordionContainer;
+let categoryTabs, searchInput, urlPreviewBar, recentLinksList, togglePreviewBtn, previewStatusText;
+let hoverPreviewCard, hoverFavicon, hoverTitle, hoverImage, hoverIframe, hoverUrl, previewLoader;
+let adminArea, addLinkForm, addModal, openAddModalBtn, closeAddModalBtn, generateCodeBtn, exportCodeTextarea;
 
 // Oppstart
 document.addEventListener('DOMContentLoaded', () => {
+    // Hvis linkData ble lastet inn etter app.js
+    if (Object.keys(activeData).length === 0 && typeof linkData !== 'undefined') {
+        activeData = JSON.parse(localStorage.getItem('myLinkData')) || linkData;
+    }
+
+    // Koble opp DOM Elementer
+    authOverlay = document.getElementById('authOverlay');
+    appContainer = document.getElementById('appContainer');
+    authError = document.getElementById('authError');
+    userInfo = document.getElementById('userInfo');
+    globalLogoutBtn = document.getElementById('globalLogoutBtn');
+    adminTabBtn = document.getElementById('adminTabBtn');
+
+    emailLoginForm = document.getElementById('emailLoginForm');
+    userEmailInput = document.getElementById('userEmailInput');
+
+    accordionContainer = document.getElementById('accordionContainer');
+    adminAccordionContainer = document.getElementById('adminAccordionContainer');
+    categoryTabs = document.getElementById('categoryTabs');
+    searchInput = document.getElementById('searchInput');
+    urlPreviewBar = document.getElementById('urlPreviewBar');
+    recentLinksList = document.getElementById('recentLinksList');
+
+    togglePreviewBtn = document.getElementById('togglePreviewBtn');
+    previewStatusText = document.getElementById('previewStatusText');
+
+    hoverPreviewCard = document.getElementById('hoverPreviewCard');
+    hoverFavicon = document.getElementById('hoverFavicon');
+    hoverTitle = document.getElementById('hoverTitle');
+    hoverImage = document.getElementById('hoverImage');
+    hoverIframe = document.getElementById('hoverIframe');
+    hoverUrl = document.getElementById('hoverUrl');
+    previewLoader = document.getElementById('previewLoader');
+
+    adminArea = document.getElementById('adminArea');
+    addLinkForm = document.getElementById('addLinkForm');
+    addModal = document.getElementById('addModal');
+    openAddModalBtn = document.getElementById('openAddModalBtn');
+    closeAddModalBtn = document.getElementById('closeAddModalBtn');
+    generateCodeBtn = document.getElementById('generateCodeBtn');
+    exportCodeTextarea = document.getElementById('exportCode');
+
     checkAuthStatus();
     setupEventListeners();
 });
 
 function checkAuthStatus() {
     if (currentUser) {
-        authOverlay.style.display = 'none';
-        appContainer.style.display = 'flex';
-        userInfo.innerHTML = `👤 ${currentUser.name} (${currentUser.email})`;
+        if (authOverlay) authOverlay.style.display = 'none';
+        if (appContainer) appContainer.style.display = 'flex';
+        if (userInfo) userInfo.innerHTML = `👤 ${currentUser.name} (${currentUser.email})`;
         
-        if (currentUser.isAdmin) {
-            adminTabBtn.style.display = 'inline-block';
-        } else {
-            adminTabBtn.style.display = 'none';
+        if (adminTabBtn) {
+            adminTabBtn.style.display = currentUser.isAdmin ? 'inline-block' : 'none';
         }
 
         renderAccordion();
         renderRecentLinks();
     } else {
-        authOverlay.style.display = 'flex';
-        appContainer.style.display = 'none';
+        if (authOverlay) authOverlay.style.display = 'flex';
+        if (appContainer) appContainer.style.display = 'none';
     }
 }
 
 function setupEventListeners() {
-    globalLogoutBtn.addEventListener('click', () => {
-        sessionStorage.removeItem('currentUser');
-        currentUser = null;
-        checkAuthStatus();
-    });
+    if (globalLogoutBtn) {
+        globalLogoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('currentUser');
+            currentUser = null;
+            checkAuthStatus();
+        });
+    }
 
     if (emailLoginForm) {
         emailLoginForm.addEventListener('submit', (e) => {
@@ -124,41 +136,47 @@ function setupEventListeners() {
         });
     }
 
-    togglePreviewBtn.addEventListener('click', () => {
-        previewEnabled = !previewEnabled;
-        previewStatusText.innerText = previewEnabled ? 'PÅ' : 'AV';
-        previewStatusText.style.color = previewEnabled ? '#38bdf8' : '#ef4444';
-        if (!previewEnabled) hideHoverPreview();
-    });
+    if (togglePreviewBtn) {
+        togglePreviewBtn.addEventListener('click', () => {
+            previewEnabled = !previewEnabled;
+            previewStatusText.innerText = previewEnabled ? 'PÅ' : 'AV';
+            previewStatusText.style.color = previewEnabled ? '#38bdf8' : '#ef4444';
+            if (!previewEnabled) hideHoverPreview();
+        });
+    }
 
-    categoryTabs.addEventListener('click', (e) => {
-        const btn = e.target.closest('.tab-btn');
-        if (!btn) return;
-        
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        currentCategory = btn.dataset.category;
-        
-        if (currentCategory === 'Admin') {
-            accordionContainer.style.display = 'none';
-            adminArea.style.display = 'block';
-            renderAdminAccordion();
-        } else {
-            accordionContainer.style.display = 'flex';
-            adminArea.style.display = 'none';
-            searchInput.value = '';
-            renderAccordion();
-        }
-    });
+    if (categoryTabs) {
+        categoryTabs.addEventListener('click', (e) => {
+            const btn = e.target.closest('.tab-btn');
+            if (!btn) return;
+            
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            currentCategory = btn.dataset.category;
+            
+            if (currentCategory === 'Admin') {
+                if (accordionContainer) accordionContainer.style.display = 'none';
+                if (adminArea) adminArea.style.display = 'block';
+                renderAdminAccordion();
+            } else {
+                if (accordionContainer) accordionContainer.style.display = 'flex';
+                if (adminArea) adminArea.style.display = 'none';
+                if (searchInput) searchInput.value = '';
+                renderAccordion();
+            }
+        });
+    }
 
-    searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        renderAccordion(query);
-    });
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            renderAccordion(query);
+        });
+    }
 
     document.addEventListener('mousemove', (e) => {
-        if (!hoverPreviewCard.classList.contains('visible')) return;
+        if (!hoverPreviewCard || !hoverPreviewCard.classList.contains('visible')) return;
 
         const cardWidth = 320;
         const cardHeight = 240;
@@ -174,47 +192,53 @@ function setupEventListeners() {
         hoverPreviewCard.style.top = `${top}px`;
     });
 
-    // Modal for å legge til lenke
-    openAddModalBtn.addEventListener('click', () => {
-        updateExportCode();
-        addModal.style.display = 'flex';
-    });
+    if (openAddModalBtn) {
+        openAddModalBtn.addEventListener('click', () => {
+            updateExportCode();
+            if (addModal) addModal.style.display = 'flex';
+        });
+    }
 
-    closeAddModalBtn.addEventListener('click', () => {
-        addModal.style.display = 'none';
-    });
+    if (closeAddModalBtn) {
+        closeAddModalBtn.addEventListener('click', () => {
+            if (addModal) addModal.style.display = 'none';
+        });
+    }
 
-    generateCodeBtn.addEventListener('click', () => {
-        addNewLinkToState();
-        updateExportCode();
-    });
+    if (generateCodeBtn) {
+        generateCodeBtn.addEventListener('click', () => {
+            addNewLinkToState();
+            updateExportCode();
+        });
+    }
 
-    addLinkForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        addNewLinkToState();
-        updateExportCode();
-        
-        exportCodeTextarea.select();
-        document.execCommand('copy');
-        alert('Koden er kopiert og lagret lokalt! Lim den inn i din linkdata.js-fil på GitHub.');
-        addModal.style.display = 'none';
-    });
+    if (addLinkForm) {
+        addLinkForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            addNewLinkToState();
+            updateExportCode();
+            
+            exportCodeTextarea.select();
+            document.execCommand('copy');
+            alert('Koden er kopiert og lagret lokalt! Lim den inn i din linkdata.js-fil på GitHub.');
+            if (addModal) addModal.style.display = 'none';
+        });
+    }
 }
 
 function showAuthError(msg) {
-    authError.innerText = msg;
-    authError.style.display = 'block';
+    if (authError) {
+        authError.innerText = msg;
+        authError.style.display = 'block';
+    }
 }
 
 function renderAccordion(searchQuery = '') {
+    if (!accordionContainer) return;
     accordionContainer.innerHTML = '';
     
-    // Filtrer ut "Admin"-kategorien fra den vanlige visningen hvis brukeren trykker på "Vis alle temaer"
     const allCategories = Object.keys(activeData).filter(cat => cat !== 'Admin');
-    
-    const categoriesToRender = (currentCategory === 'Alle') 
-        ? allCategories 
-        : [currentCategory];
+    const categoriesToRender = (currentCategory === 'Alle') ? allCategories : [currentCategory];
 
     let hasMatches = false;
 
@@ -277,8 +301,8 @@ function renderAccordion(searchQuery = '') {
     }
 }
 
-// Rendrer kun Admin-lenkene på Admin-fanen
 function renderAdminAccordion() {
+    if (!adminAccordionContainer) return;
     adminAccordionContainer.innerHTML = '';
     
     const catName = "Admin";
@@ -352,12 +376,12 @@ function createLinkRow(item, category, index, showDelete = false) {
     `;
 
     a.addEventListener('mouseenter', (e) => {
-        urlPreviewBar.innerHTML = `<span>🔗 <strong>${item.title}:</strong> ${item.url}</span>`;
+        if (urlPreviewBar) urlPreviewBar.innerHTML = `<span>🔗 <strong>${item.title}:</strong> ${item.url}</span>`;
         if (previewEnabled) showHoverPreview(item, e);
     });
 
     a.addEventListener('mouseleave', () => {
-        urlPreviewBar.innerHTML = `<span>Hold musen over en lenke for å se nettadressen her...</span>`;
+        if (urlPreviewBar) urlPreviewBar.innerHTML = `<span>Hold musen over en lenke for å se nettadressen her...</span>`;
         hideHoverPreview();
     });
 
@@ -369,34 +393,39 @@ function createLinkRow(item, category, index, showDelete = false) {
 }
 
 function showHoverPreview(item, event) {
+    if (!hoverPreviewCard) return;
     if (item.url.includes('sites.google.com') || item.url.includes('drive.google.com') || item.url.includes('docs.google.com')) {
         return;
     }
 
-    hoverTitle.innerText = item.title;
-    hoverUrl.innerText = item.url;
+    if (hoverTitle) hoverTitle.innerText = item.title;
+    if (hoverUrl) hoverUrl.innerText = item.url;
     
     try {
         const domain = new URL(item.url).hostname;
-        hoverFavicon.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+        if (hoverFavicon) hoverFavicon.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
     } catch {
-        hoverFavicon.src = '';
+        if (hoverFavicon) hoverFavicon.src = '';
     }
 
-    previewLoader.style.opacity = '1';
-    hoverImage.style.display = 'block';
-    hoverIframe.style.display = 'none';
+    if (previewLoader) previewLoader.style.opacity = '1';
+    if (hoverImage) hoverImage.style.display = 'block';
+    if (hoverIframe) hoverIframe.style.display = 'none';
 
     const screenshotUrl = `https://api.microlink.io/?url=${encodeURIComponent(item.url)}&screenshot=true&embed=screenshot.url`;
-    hoverImage.src = screenshotUrl;
+    if (hoverImage) hoverImage.src = screenshotUrl;
 
-    hoverImage.onload = () => { previewLoader.style.opacity = '0'; };
-    hoverImage.onerror = () => {
-        hoverImage.style.display = 'none';
-        hoverIframe.style.display = 'block';
-        hoverIframe.src = item.url;
-        previewLoader.style.opacity = '0';
-    };
+    if (hoverImage) {
+        hoverImage.onload = () => { if (previewLoader) previewLoader.style.opacity = '0'; };
+        hoverImage.onerror = () => {
+            hoverImage.style.display = 'none';
+            if (hoverIframe) {
+                hoverIframe.style.display = 'block';
+                hoverIframe.src = item.url;
+            }
+            if (previewLoader) previewLoader.style.opacity = '0';
+        };
+    }
 
     hoverPreviewCard.style.left = `${event.clientX + 15}px`;
     hoverPreviewCard.style.top = `${event.clientY + 15}px`;
@@ -404,9 +433,10 @@ function showHoverPreview(item, event) {
 }
 
 function hideHoverPreview() {
+    if (!hoverPreviewCard) return;
     hoverPreviewCard.classList.remove('visible');
-    hoverImage.src = '';
-    hoverIframe.src = '';
+    if (hoverImage) hoverImage.src = '';
+    if (hoverIframe) hoverIframe.src = '';
 }
 
 function addRecentLink(item) {
@@ -420,6 +450,7 @@ function addRecentLink(item) {
 }
 
 function renderRecentLinks() {
+    if (!recentLinksList) return;
     const recent = JSON.parse(localStorage.getItem('recentLinks')) || [];
     if (recent.length === 0) {
         recentLinksList.innerHTML = `<span style="color: var(--text-secondary); font-size: 0.8rem;">Ingen nylig besøkte lenker ennå.</span>`;
@@ -428,20 +459,29 @@ function renderRecentLinks() {
 
     recentLinksList.innerHTML = recent.map(item => `
         <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="recent-chip" 
-           onmouseenter="document.getElementById('urlPreviewBar').innerHTML = '<span>🔗 <strong>${item.title}:</strong> ${item.url}</span>'"
-           onmouseleave="document.getElementById('urlPreviewBar').innerHTML = '<span>Hold musen over en lenke for å se nettadressen her...</span>'">
+           onmouseenter="if(document.getElementById('urlPreviewBar')) document.getElementById('urlPreviewBar').innerHTML = '<span>🔗 <strong>${item.title}:</strong> ${item.url}</span>'"
+           onmouseleave="if(document.getElementById('urlPreviewBar')) document.getElementById('urlPreviewBar').innerHTML = '<span>Hold musen over en lenke for å se nettadressen her...</span>'">
             ${item.title}
         </a>
     `).join('');
 }
 
 function addNewLinkToState() {
-    const cat = document.getElementById('newCategory').value;
-    const title = document.getElementById('newTitle').value.trim();
-    const url = document.getElementById('newUrl').value.trim();
-    const icon = document.getElementById('newIcon').value.trim();
-    const desc = document.getElementById('newDesc').value.trim();
-    const tagsRaw = document.getElementById('newTags').value.trim();
+    const catEl = document.getElementById('newCategory');
+    const titleEl = document.getElementById('newTitle');
+    const urlEl = document.getElementById('newUrl');
+    const iconEl = document.getElementById('newIcon');
+    const descEl = document.getElementById('newDesc');
+    const tagsEl = document.getElementById('newTags');
+
+    if (!catEl || !titleEl || !urlEl) return;
+
+    const cat = catEl.value;
+    const title = titleEl.value.trim();
+    const url = urlEl.value.trim();
+    const icon = iconEl ? iconEl.value.trim() : '';
+    const desc = descEl ? descEl.value.trim() : '';
+    const tagsRaw = tagsEl ? tagsEl.value.trim() : '';
 
     if (!title || !url) return;
 
@@ -451,7 +491,6 @@ function addNewLinkToState() {
         activeData[cat] = [];
     }
 
-    // Sjekk om lenken allerede finnes
     const existingIndex = activeData[cat].findIndex(l => l.url === url);
     const newObj = { title, url, description: desc, tags };
     if (icon) newObj.icon = icon;
@@ -479,6 +518,7 @@ function deleteLink(cat, index, e) {
 }
 
 function updateExportCode() {
+    if (!exportCodeTextarea) return;
     const adminList = typeof ADMIN_EMAILS !== 'undefined' ? ADMIN_EMAILS : ["77tor@ikrs.no", "tor.skarprud@gmail.com"];
     const code = `const linkData = ${JSON.stringify(activeData, null, 4)};\n\nconst ADMIN_EMAILS = ${JSON.stringify(adminList, null, 4)};`;
     exportCodeTextarea.value = code;
