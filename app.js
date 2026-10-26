@@ -349,11 +349,17 @@ function createLinkRow(item, category, index, showDelete = false) {
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
 
-    let domain = '';
-    try { domain = new URL(item.url).hostname; } catch(e) {}
-    // Endret sz=32 til sz=64 for bedre oppløsning på større ikoner
-    const defaultFavicon = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=32` : '';
-    const iconUrl = item.icon || defaultFavicon;
+    // Stilrent, innebygd fallback-ikon (SVG-lenke i en sirkel/firkant)
+    const fallbackSVG = `data:image/svg+xml;utf8,` + encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36">
+            <rect width="36" height="36" rx="8" fill="#1e293b"/>
+            <path fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+                d="M15 21l6-6M13.5 16.5l-2.2 2.2a4 4 0 105.6 5.6l2.2-2.2M22.5 19.5l2.2-2.2a4 4 0 10-5.6-5.6l-2.2 2.2"/>
+        </svg>
+    `);
+
+    // Bruker egendefinert ikon fra ikon/-mappen om det finnes, ellers SVG-reserve
+    const iconUrl = item.icon || fallbackSVG;
 
     const tagsHtml = (item.tags || []).map(t => `<span class="tag">#${t}</span>`).join('');
 
@@ -364,7 +370,7 @@ function createLinkRow(item, category, index, showDelete = false) {
 
     a.innerHTML = `
         <div class="link-left">
-            <img class="link-favicon" src="${iconUrl}" alt="" onerror="this.onerror=null; this.src='${defaultFavicon}';">
+            <img class="link-favicon" src="${iconUrl}" alt="" onerror="this.onerror=null; this.src='${fallbackSVG}';">
             <div class="link-info">
                 <span class="link-title">${item.title}</span>
                 <span class="link-desc">${item.description || item.url}</span>
