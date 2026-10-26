@@ -154,25 +154,29 @@ const linkData = {
             title: "Dashboard",
             url: "https://77tor.github.io/dashboard/",
             description: "Skrivebordsskjerm med dagsplan.",
-            tags: ["interaktiv", "øving", "nett"]
+            tags: ["interaktiv", "øving", "nett"],
+            icon: "ikon/dash.svg"
         },
         {
             title: "Kahoot!",
             url: "https://kahoot.com",
             description: "Spillbaserte quizer og læringsspill.",
-            tags: ["quiz", "interaktiv", "spill"]
+            tags: ["quiz", "interaktiv", "spill"],
+            icon: "ikon/kahoot.png"
         },
         {
             title: "Visma Flyt Timeplan",
             url: "https://timeplan.visma.com/netSystem/",
             description: "Logg inn på Visma Flyt Timeplan",
-            tags: ["Verktøy"]
+            tags: ["Verktøy"],
+            icon: "ikon/flyt.png"
         },
         {
             title: "Logge på hjemmesiden",
             url: "https://www.minadmin.no/",
             description: "Logg på Nyweb fo å legge ut ukeplaner, bilder og/eller artikler",
-            tags: ["Verktøy", "Nett"]
+            tags: ["Verktøy", "Nett"],
+            icon: "ikon/nyweb.png"
         }
 
 
