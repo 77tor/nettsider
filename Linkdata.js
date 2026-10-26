@@ -59,6 +59,20 @@ const linkData = {
             tags: ["matematikk", "oppgaver", "logikk"]
         },
         {
+            title: "Gruble.net",
+            url: "https://gruble.net/",
+            description: "Matematikkutfordringer og problemløsing for alle trinn.",
+            tags: ["matematikk", "oppgaver", "logikk"],
+            icon: "ikon/gruble.png"
+        },
+        {
+            title: "Matematikk.org",
+            url: "https://www.matematikk.org/",
+            description: "Matematikkutfordringer og problemløsing for alle trinn.",
+            tags: ["matematikk", "oppgaver", "logikk"],
+            icon: "ikon/matematikk.png"
+        },
+        {
             title: "Kahn Academy Norge",
             url: "https://nb.khanacademy.org",
             description: "Gratis videoer og øvingsoppgaver i matematikk.",
