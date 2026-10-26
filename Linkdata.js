@@ -90,7 +90,7 @@ const linkData = {
             url: "https://77tor.github.io/finn_ordet/",
             description: "Skriv ut ark for å pare bilder og ord",
             tags: ["lesing", "norsk", "barneskole"],
-            icon: "ikon/finnordet.png"
+            icon: "ikon/finnordet.svg"
         },
         {
             title: "Gitter",
@@ -125,7 +125,7 @@ const linkData = {
             url: "https://77tor.github.io/puslehistorier/",
             description: "Sett sammen ord/bilder til fortellinger",
             tags: ["lesing", "norsk", "barneskole"],
-            icon: "ikon/puslehistorier.png"
+            icon: "ikon/pusle.png"
         },
         {
             title: "Silhuettord",
