@@ -1,11 +1,47 @@
+// Dekode Google Token (JWT)
+function parseJwt(token) {
+    try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+    } catch (e) {
+        return null;
+    }
+}
+
+// Global Google Sign-In Callback
+window.handleGoogleSignIn = function(response) {
+    const payload = parseJwt(response.credential);
+    if (!payload || !payload.email) {
+        showAuthError("Kunne ikke bekrefte Google-innlogging.");
+        return;
+    }
+
+    const email = payload.email.toLowerCase();
+    const isUserAdmin = typeof ADMIN_EMAILS !== 'undefined' && ADMIN_EMAILS.includes(email);
+    
+    if (email.endsWith('@ikrs.no') || isUserAdmin) {
+        currentUser = {
+            name: payload.name || email.split('@')[0],
+            email: email,
+            picture: payload.picture || '',
+            isAdmin: isUserAdmin
+        };
+        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+        checkAuthStatus();
+    } else {
+        showAuthError(`Tilgang nektet: (${email}). Kun @ikrs.no e-poster har tilgang.`);
+    }
+};
+
 // Tilstand
 let currentCategory = "Alle";
 let activeData = JSON.parse(localStorage.getItem('myLinkData')) || linkData;
 let currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || null;
 let previewEnabled = true;
-
-// Definer administrator-eposter
-const ADMIN_EMAILS = ["77tor@ikrs.no", "tor.skarprud@gmail.com"];
 
 // DOM Elementer
 const authOverlay = document.getElementById('authOverlay');
@@ -43,51 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
-// Dekode Google Token (JWT)
-function parseJwt(token) {
-    try {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-        return JSON.parse(jsonPayload);
-    } catch (e) {
-        return null;
-    }
-}
-
-// Global Google Sign-In Callback
-window.handleGoogleSignIn = function(response) {
-    const payload = parseJwt(response.credential);
-    if (!payload || !payload.email) {
-        showAuthError("Kunne ikke bekrefte Google-innlogging.");
-        return;
-    }
-
-    const email = payload.email.toLowerCase();
-    
-    if (email.endsWith('@ikrs.no') || ADMIN_EMAILS.includes(email)) {
-        currentUser = {
-            name: payload.name || email.split('@')[0],
-            email: email,
-            picture: payload.picture || '',
-            isAdmin: ADMIN_EMAILS.includes(email)
-        };
-        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-        checkAuthStatus();
-    } else {
-        showAuthError(`Tilgang nektet: (${email}). Kun @ikrs.no e-poster har tilgang.`);
-    }
-};
-
 function checkAuthStatus() {
     if (currentUser) {
         authOverlay.style.display = 'none';
         appContainer.style.display = 'flex';
         userInfo.innerHTML = `👤 ${currentUser.name} (${currentUser.email})`;
         
-        // Kun tilgang til Admin hvis e-posten matcher ADMIN_EMAILS
         if (currentUser.isAdmin) {
             adminTabBtn.style.display = 'inline-block';
         } else {
@@ -116,7 +113,6 @@ function setupEventListeners() {
         if (!previewEnabled) hideHoverPreview();
     });
 
-    // Kategori-tabs (Fikset slik at fanene virker!)
     categoryTabs.addEventListener('click', (e) => {
         const btn = e.target.closest('.tab-btn');
         if (!btn) return;
@@ -138,13 +134,11 @@ function setupEventListeners() {
         }
     });
 
-    // Søk
     searchInput.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase().trim();
         renderAccordion(query);
     });
 
-    // Mus-bevegelse for forhåndsvisningskort
     document.addEventListener('mousemove', (e) => {
         if (!hoverPreviewCard.classList.contains('visible')) return;
 
@@ -394,6 +388,7 @@ function deleteLink(cat, index, e) {
 }
 
 function updateExportCode() {
-    const code = `const linkData = ${JSON.stringify(activeData, null, 4)};\n\nconst ADMIN_EMAILS = ${JSON.stringify(ADMIN_EMAILS, null, 4)};`;
+    const adminList = typeof ADMIN_EMAILS !== 'undefined' ? ADMIN_EMAILS : ["77tor@ikrs.no", "tor.skarprud@gmail.com"];
+    const code = `const linkData = ${JSON.stringify(activeData, null, 4)};\n\nconst ADMIN_EMAILS = ${JSON.stringify(adminList, null, 4)};`;
     exportCodeTextarea.value = code;
 }
