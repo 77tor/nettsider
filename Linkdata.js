@@ -82,73 +82,72 @@ const linkData = {
             title: "Bingo",
             url: "https://77tor.github.io/bingo/",
             description: "Skriv ut bingoark",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/bingo.png"
         },
         {
             title: "Finn ordet",
             url: "https://77tor.github.io/finn_ordet/",
             description: "Skriv ut ark for å pare bilder og ord",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/finnordet.png"
         },
         {
             title: "Gitter",
             url: "https://77tor.github.io/gitter/",
             description: "Lag gitter av flere ord",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/gitter.png"
         },
         {
             title: "Les og skriv",
             url: "https://77tor.github.io/les_og_skriv/",
             description: "Arbeid med enkle ord og setninger",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/lesskriv.png"
         },
         {
             title: "Ordkjeder",
             url: "https://77tor.github.io/ordkjeder/",
             description: "Arbeid med å kunne lese ord",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/ordkjeder.png"
         },
         {
             title: "Ordsøk",
             url: "https://77tor.github.io/ord-sok/",
             description: "Finn ord i en mengde bokstaver",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/ordsok.png"
         },
         {
             title: "Puslehistorier",
             url: "https://77tor.github.io/puslehistorier/",
             description: "Sett sammen ord/bilder til fortellinger",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/puslehistorier.png"
         },
         {
             title: "Silhuettord",
             url: "https://77tor.github.io/Silhuettord/",
             description: "Lag silhuetter av ulike ord",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/silhuettord.png"
         },
         {
             title: "Stavelser",
             url: "https://77tor.github.io/Stavelser/",
             description: "Arbeid med stavelser",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/stavelser.png"
         },
         {
             title: "Synonymer",
             url: "https://77tor.github.io/synonymer/",
             description: "Arbeid med synonymer",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/synonym.png"
         }
-
     ],
     "Oppg. for nett": [
         {
