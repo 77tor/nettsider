@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ressurs- og Lenkesamling</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Google Identity Services SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 
@@ -12,9 +14,30 @@
     <div id="authOverlay" class="auth-overlay">
         <div class="auth-card">
             <h2>Velkommen til Lenkesamlingen</h2>
-            <p>Skriv inn din <strong>@ikrs.no</strong> e-postadresse for å få tilgang.</p>
+            <p>Logg inn med din <strong>@ikrs.no</strong> Google-konto for å få tilgang.</p>
             
-            <form id="emailLoginForm" onsubmit="return false;">
+            <!-- Google Sign-In Knappen -->
+            <div id="googleBtnWrapper" class="google-btn-wrapper" style="display: flex; justify-content: center; margin-bottom: 1rem;">
+                <div id="g_id_onload"
+                    data-client_id="248555599537-8abnq12euqj6cb8i9j11v23jb6ga2enn.apps.googleusercontent.com"
+                    data-context="signin"
+                    data-ux_mode="popup"
+                    data-callback="handleGoogleSignIn"
+                    data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin"
+                    data-type="standard"
+                    data-shape="rectangular"
+                    data-theme="outline"
+                    data-text="signin_with"
+                    data-size="large"
+                    data-logo_alignment="left">
+                </div>
+            </div>
+
+            <!-- Fallback skjema for manuell e-post -->
+            <form id="emailLoginForm" onsubmit="return false;" style="margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.8rem;">Eller skriv inn din e-post manuelt:</p>
                 <div class="form-group" style="margin-bottom: 1rem;">
                     <input type="email" id="userEmailInput" class="form-input" placeholder="din-epost@ikrs.no" style="text-align: center;" required>
                 </div>
@@ -119,9 +142,9 @@
                         </form>
 
                         <div>
-                            <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Lagre endringer til <code>linkdata.js</code></h3>
+                            <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Lagre endringer til <code>Linkdata.js</code></h3>
                             <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
-                                Kopier koden under og lim den inn i din <code>linkdata.js</code>-fil for å lagre endringene permanent.
+                                Kopier koden under og lim den inn i din <code>Linkdata.js</code>-fil for å lagre endringene permanent.
                             </p>
                             <textarea id="exportCode" class="form-textarea" rows="8" readonly style="font-family: monospace; font-size: 0.8rem;"></textarea>
                             <button id="copyExportBtn" class="btn btn-primary btn-sm" style="margin-top: 0.5rem;">Kopier kode</button>

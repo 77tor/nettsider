@@ -40,6 +40,44 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
+// Dekode Google Token (JWT)
+function parseJwt(token) {
+    try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+    } catch (e) {
+        return null;
+    }
+}
+
+// Global Google Sign-In Callback
+window.handleGoogleSignIn = function(response) {
+    const payload = parseJwt(response.credential);
+    if (!payload || !payload.email) {
+        showAuthError("Kunne ikke bekrefte Google-innlogging.");
+        return;
+    }
+
+    const email = payload.email.toLowerCase();
+    
+    if (email.endsWith('@ikrs.no') || ADMIN_EMAILS.includes(email)) {
+        currentUser = {
+            name: payload.name || email.split('@')[0],
+            email: email,
+            picture: payload.picture || '',
+            isAdmin: ADMIN_EMAILS.includes(email)
+        };
+        sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+        checkAuthStatus();
+    } else {
+        showAuthError(`Tilgang nektet: (${email}). Kun @ikrs.no e-poster har tilgang.`);
+    }
+};
+
 function checkAuthStatus() {
     if (currentUser) {
         authOverlay.style.display = 'none';
@@ -61,7 +99,7 @@ function checkAuthStatus() {
 }
 
 function setupEventListeners() {
-    // Innlogging
+    // Manuell e-post innlogging (Fallback)
     document.getElementById('emailLoginForm').addEventListener('submit', (e) => {
         e.preventDefault();
         const input = document.getElementById('userEmailInput').value.trim().toLowerCase();
@@ -142,7 +180,7 @@ function setupEventListeners() {
     copyExportBtn.addEventListener('click', () => {
         exportCodeTextarea.select();
         document.execCommand('copy');
-        alert('Koden er kopiert! Lim den inn i din linkdata.js-fil.');
+        alert('Koden er kopiert! Lim den inn i din Linkdata.js-fil.');
     });
 }
 
@@ -151,7 +189,6 @@ function showAuthError(msg) {
     authError.style.display = 'block';
 }
 
-// Render nedtrekksmenyer (Accordion)
 function renderAccordion(searchQuery = '') {
     accordionContainer.innerHTML = '';
     
@@ -220,7 +257,6 @@ function renderAccordion(searchQuery = '') {
     }
 }
 
-// Lag én enkelt rad i listevisningen
 function createLinkRow(item, category, index) {
     const a = document.createElement('a');
     a.className = 'link-row';
@@ -253,7 +289,6 @@ function createLinkRow(item, category, index) {
         </div>
     `;
 
-    // Hover effekter for URL Bar & Bildeforhåndsvisning
     a.addEventListener('mouseenter', (e) => {
         urlPreviewBar.innerHTML = `<span>🔗 <strong>${item.title}:</strong> ${item.url}</span>`;
         if (previewEnabled) showHoverPreview(item, e);
@@ -271,7 +306,6 @@ function createLinkRow(item, category, index) {
     return a;
 }
 
-// Bildeforhåndsvisning
 function showHoverPreview(item, event) {
     if (item.url.includes('sites.google.com') || item.url.includes('drive.google.com') || item.url.includes('docs.google.com')) {
         return;
