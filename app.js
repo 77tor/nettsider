@@ -4,6 +4,9 @@ let activeData = JSON.parse(localStorage.getItem('myLinkData')) || linkData;
 let currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || null;
 let previewEnabled = true;
 
+// Definer administrator-eposter
+const ADMIN_EMAILS = ["77tor@ikrs.no", "tor.skarprud@gmail.com"];
+
 // DOM Elementer
 const authOverlay = document.getElementById('authOverlay');
 const appContainer = document.getElementById('appContainer');
@@ -84,6 +87,7 @@ function checkAuthStatus() {
         appContainer.style.display = 'flex';
         userInfo.innerHTML = `👤 ${currentUser.name} (${currentUser.email})`;
         
+        // Kun tilgang til Admin hvis e-posten matcher ADMIN_EMAILS
         if (currentUser.isAdmin) {
             adminTabBtn.style.display = 'inline-block';
         } else {
@@ -99,24 +103,6 @@ function checkAuthStatus() {
 }
 
 function setupEventListeners() {
-    // Manuell e-post innlogging (Fallback)
-    document.getElementById('emailLoginForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const input = document.getElementById('userEmailInput').value.trim().toLowerCase();
-        
-        if (input.endsWith('@ikrs.no') || ADMIN_EMAILS.includes(input)) {
-            currentUser = {
-                name: input.split('@')[0],
-                email: input,
-                isAdmin: ADMIN_EMAILS.includes(input)
-            };
-            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-            checkAuthStatus();
-        } else {
-            showAuthError("Kun e-postadresser som slutter på @ikrs.no har tilgang.");
-        }
-    });
-
     globalLogoutBtn.addEventListener('click', () => {
         sessionStorage.removeItem('currentUser');
         currentUser = null;
@@ -130,14 +116,15 @@ function setupEventListeners() {
         if (!previewEnabled) hideHoverPreview();
     });
 
-    // Menytabs
+    // Kategori-tabs (Fikset slik at fanene virker!)
     categoryTabs.addEventListener('click', (e) => {
-        if (!e.target.classList.contains('tab-btn')) return;
+        const btn = e.target.closest('.tab-btn');
+        if (!btn) return;
         
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        e.target.classList.add('active');
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
         
-        currentCategory = e.target.dataset.category;
+        currentCategory = btn.dataset.category;
         
         if (currentCategory === 'Admin') {
             accordionContainer.style.display = 'none';
