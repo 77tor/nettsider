@@ -351,7 +351,8 @@ function createLinkRow(item, category, index, showDelete = false) {
 
     let domain = '';
     try { domain = new URL(item.url).hostname; } catch(e) {}
-    const defaultFavicon = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=32` : '';
+    // Endret sz=32 til sz=64 for bedre oppløsning på større ikoner
+    const defaultFavicon = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=64` : '';
     const iconUrl = item.icon || defaultFavicon;
 
     const tagsHtml = (item.tags || []).map(t => `<span class="tag">#${t}</span>`).join('');

@@ -56,7 +56,7 @@ body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Ro
 .link-row:last-child { border-bottom: none; }
 .link-row:hover { background: rgba(51, 65, 85, 0.6); }
 .link-left { display: flex; align-items: center; gap: 0.8rem; flex-grow: 1; }
-.link-favicon { width: 16px; height: 16px; border-radius: 3px; flex-shrink: 0; }
+.link-favicon { width: 36px; height: 36px; border-radius: 6px; flex-shrink: 0; object-fit: contain; }
 .link-info { display: flex; flex-direction: column; }
 .link-title { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
 .link-desc { font-size: 0.8rem; color: var(--text-secondary); }
