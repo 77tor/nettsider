@@ -184,25 +184,29 @@ const linkData = {
             title: "GSI Grunnskole",
             url: "https://77tor.github.io/GSI/",
             description: "Grunnskolens Informasjonssystem.",
-            tags: ["admin", "gsi", "skole"]
+            tags: ["admin", "gsi", "skole"],
+            icon: "ikon/gsi.svg"
         },
         {
             title: "iPad Inventar og Database",
             url: "https://77tor.github.io/ipad/",
             description: "Oversikt og registrering av iPads.",
-            tags: ["ipad", "inventar", "admin"]
+            tags: ["ipad", "inventar", "admin"],
+            icon: "ikon/ipad.svg"
         },
         {
             title: "Leirskoleavtale",
             url: "https://77tor.github.io/leirskoleavtale/",
             description: "Avtaler og oversikt for leirskole.",
-            tags: ["leirskole", "avtaler", "admin"]
+            tags: ["leirskole", "avtaler", "admin"],
+            icon: "ikon/leirskole.png"
         },
         {
             title: "Reg. lokale kartlegginger",
             url: "https://77tor.github.io/Reg-lokale-kart/",
             description: "Registrering av kartleggingsprøver.",
-            tags: ["kartlegging", "prøver", "admin"]
+            tags: ["kartlegging", "prøver", "admin"],
+            icon: "ikon/kartlegging.svg"
         }
     ]
 };
