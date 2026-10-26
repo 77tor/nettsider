@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="120" height="120">
+  <defs>
+    <!-- Grønn Hovedgradient (Hånes-grønn) -->
+    <linearGradient id="hdGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e" />
+      <stop offset="100%" stop-color="#15803d" />
+    </linearGradient>
+
+    <!-- Rosa Aksentfarge (Fra Elevtrekker-knappen) -->
+    <linearGradient id="hdPink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ec4899" />
+      <stop offset="100%" stop-color="#be185d" />
+    </linearGradient>
+
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-opacity="0.2" />
+    </filter>
+  </defs>
+
+  <g filter="url(#softShadow)">
+    <!-- STOR D-RAMME (Dashboard) -->
+    <path d="M 18,12 
+             L 52,12 
+             C 76,12 90,26 90,50 
+             C 90,74 76,88 52,88 
+             L 18,88 
+             Z" 
+          fill="url(#hdGreen)" />
+
+    <!-- INDRE "HULL" I D-EN -->
+    <path d="M 32,24 
+             L 50,24 
+             C 65,24 74,33 74,50 
+             C 74,67 65,76 50,76 
+             L 32,76 
+             Z" 
+          fill="#ffffff" />
+
+    <!-- TREET FRA HÅNES-LOGOEN (Plassert bak/midt i H-en) -->
+    <g opacity="0.18" transform="translate(1, 2)">
+      <circle cx="50" cy="42" r="16" fill="#15803d" />
+      <rect x="47" y="52" width="6" height="20" fill="#15803d" />
+    </g>
+
+    <!-- BOKSTAVEN H (Hånes - flettet inn i sentrum av D-en) -->
+    <g fill="#15803d">
+      <!-- Venstre stolpe i H -->
+      <rect x="38" y="32" width="7" height="36" rx="2" />
+      <!-- Tverrstang i H -->
+      <rect x="38" y="47" width="22" height="6" rx="1" />
+      <!-- Høyre stolpe i H -->
+      <rect x="53" y="32" width="7" height="36" rx="2" />
+    </g>
+
+    <!-- TREKKE-ELEMENTER / TERNINGPRIKKER (Aksenter fra verktøyene) -->
+    <circle cx="38" cy="20" r="3.5" fill="url(#hdPink)" />
+    <circle cx="78" cy="50" r="3.5" fill="url(#hdPink)" />
+    <circle cx="38" cy="80" r="3.5" fill="url(#hdPink)" />
+  </g>
+</svg>
