@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Bakgrunnsgradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4A90E2" />
+      <stop offset="100%" stop-color="#357ABD" />
+    </linearGradient>
+
+    <!-- Kort-skygge -->
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <!-- Bakgrunns-sirkel / App-ikon ramme -->
+  <rect width="512" height="512" rx="110" fill="url(#bgGrad)" />
+
+  <!-- Venstre kort: Bilde (Solen over fjell) -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="100" width="150" height="150" rx="20" fill="#FFFFFF" />
+    <!-- Fjell og Sol -->
+    <circle cx="115" cy="145" r="18" fill="#F5A623" />
+    <path d="M85 220 L125 170 L155 200 L180 175 L205 220 Z" fill="#7ED321" />
+    <circle cx="205" cy="175" r="10" fill="#27AE60" />
+  </g>
+
+  <!-- Høyre kort: Bokstav (A) -->
+  <g filter="url(#shadow)">
+    <rect x="292" y="262" width="150" height="150" rx="20" fill="#FFFFFF" />
+    <text x="367" y="372" font-family="'Comic Sans MS', 'Fredoka', Arial, sans-serif" font-size="110" font-weight="bold" fill="#D0021B" text-anchor="middle">A</text>
+  </g>
+
+  <!-- Stiplet linje (Streken man trekker) -->
+  <path d="M 220 175 C 270 175, 240 337, 292 337" 
+        fill="none" 
+        stroke="#F8E71C" 
+        stroke-width="14" 
+        stroke-dasharray="18 12" 
+        stroke-linecap="round" />
+
+  <!-- Punkter der streken starter og slutter -->
+  <circle cx="220" cy="175" r="12" fill="#F8E71C" />
+  <circle cx="292" cy="337" r="12" fill="#F8E71C" />
+
+  <!-- Blyant som tegner streken -->
+  <g transform="translate(230, 210) rotate(-35)" filter="url(#shadow)">
+    <!-- Blyantkropp -->
+    <path d="M 0 0 L 100 0 L 100 28 L 0 28 Z" fill="#F5A623" />
+    <!-- Viskelær -->
+    <path d="M -25 0 L 0 0 L 0 28 L -25 28 C -32 28, -32 0, -25 0 Z" fill="#FF7675" />
+    <path d="M -5 0 L 0 0 L 0 28 L -5 28 Z" fill="#B2BEC3" />
+    <!-- Blyantspiss -->
+    <path d="M 100 0 L 130 14 L 100 28 Z" fill="#FFEAA7" />
+    <path d="M 120 9.3 L 130 14 L 120 18.7 Z" fill="#2D3436" />
+  </g>
+</svg>
