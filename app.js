@@ -58,6 +58,7 @@ const emailLoginForm = document.getElementById('emailLoginForm');
 const userEmailInput = document.getElementById('userEmailInput');
 
 const accordionContainer = document.getElementById('accordionContainer');
+const adminAccordionContainer = document.getElementById('adminAccordionContainer');
 const categoryTabs = document.getElementById('categoryTabs');
 const searchInput = document.getElementById('searchInput');
 const urlPreviewBar = document.getElementById('urlPreviewBar');
@@ -76,6 +77,9 @@ const previewLoader = document.getElementById('previewLoader');
 
 const adminArea = document.getElementById('adminArea');
 const addLinkForm = document.getElementById('addLinkForm');
+const exportModal = document.getElementById('exportModal');
+const openExportModalBtn = document.getElementById('openExportModalBtn');
+const closeExportModalBtn = document.getElementById('closeExportModalBtn');
 const exportCodeTextarea = document.getElementById('exportCode');
 const copyExportBtn = document.getElementById('copyExportBtn');
 
@@ -91,7 +95,6 @@ function checkAuthStatus() {
         appContainer.style.display = 'flex';
         userInfo.innerHTML = `👤 ${currentUser.name} (${currentUser.email})`;
         
-        // Admin-fane kun synlig for godkjente admin-eposter
         if (currentUser.isAdmin) {
             adminTabBtn.style.display = 'inline-block';
         } else {
@@ -107,14 +110,12 @@ function checkAuthStatus() {
 }
 
 function setupEventListeners() {
-    // Logg ut
     globalLogoutBtn.addEventListener('click', () => {
         sessionStorage.removeItem('currentUser');
         currentUser = null;
         checkAuthStatus();
     });
 
-    // Manuell e-post innlogging submit
     if (emailLoginForm) {
         emailLoginForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -123,7 +124,6 @@ function setupEventListeners() {
         });
     }
 
-    // Toggle forhåndsvisning
     togglePreviewBtn.addEventListener('click', () => {
         previewEnabled = !previewEnabled;
         previewStatusText.innerText = previewEnabled ? 'PÅ' : 'AV';
@@ -131,7 +131,6 @@ function setupEventListeners() {
         if (!previewEnabled) hideHoverPreview();
     });
 
-    // Kategori faner
     categoryTabs.addEventListener('click', (e) => {
         const btn = e.target.closest('.tab-btn');
         if (!btn) return;
@@ -144,7 +143,7 @@ function setupEventListeners() {
         if (currentCategory === 'Admin') {
             accordionContainer.style.display = 'none';
             adminArea.style.display = 'block';
-            updateExportCode();
+            renderAdminAccordion();
         } else {
             accordionContainer.style.display = 'flex';
             adminArea.style.display = 'none';
@@ -153,13 +152,11 @@ function setupEventListeners() {
         }
     });
 
-    // Søk
     searchInput.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase().trim();
         renderAccordion(query);
     });
 
-    // Mus-bevegelse for forhåndsvisning
     document.addEventListener('mousemove', (e) => {
         if (!hoverPreviewCard.classList.contains('visible')) return;
 
@@ -179,10 +176,20 @@ function setupEventListeners() {
 
     addLinkForm.addEventListener('submit', handleAddLink);
 
+    // Modal styring
+    openExportModalBtn.addEventListener('click', () => {
+        updateExportCode();
+        exportModal.style.display = 'flex';
+    });
+
+    closeExportModalBtn.addEventListener('click', () => {
+        exportModal.style.display = 'none';
+    });
+
     copyExportBtn.addEventListener('click', () => {
         exportCodeTextarea.select();
         document.execCommand('copy');
-        alert('Koden er kopiert! Lim den inn i din Linkdata.js-fil.');
+        alert('Koden er kopiert! Lim den inn i din linkdata.js-fil på GitHub.');
     });
 }
 
@@ -243,7 +250,7 @@ function renderAccordion(searchQuery = '') {
             listEl.innerHTML = `<p style="padding: 0.8rem; color: var(--text-secondary); font-size: 0.85rem;">Ingen lenker her ennå.</p>`;
         } else {
             links.forEach((item, index) => {
-                const linkRow = createLinkRow(item, catName, index);
+                const linkRow = createLinkRow(item, catName, index, false);
                 listEl.appendChild(linkRow);
             });
         }
@@ -259,31 +266,74 @@ function renderAccordion(searchQuery = '') {
     }
 }
 
-function createLinkRow(item, category, index) {
+// Rendrer alle kategorier og lenker i Admin-fanen med slette-knapp
+function renderAdminAccordion() {
+    adminAccordionContainer.innerHTML = '';
+    
+    Object.keys(activeData).forEach(catName => {
+        const links = activeData[catName] || [];
+
+        const itemEl = document.createElement('div');
+        itemEl.className = 'accordion-item open';
+
+        const headerEl = document.createElement('div');
+        headerEl.className = 'accordion-header';
+        headerEl.innerHTML = `
+            <div class="accordion-title">
+                📁 ${catName}
+                <span class="accordion-badge">${links.length} lenker</span>
+            </div>
+            <span class="accordion-icon">▼</span>
+        `;
+
+        headerEl.addEventListener('click', () => {
+            itemEl.classList.toggle('open');
+        });
+
+        const bodyEl = document.createElement('div');
+        bodyEl.className = 'accordion-body';
+
+        const listEl = document.createElement('div');
+        listEl.className = 'link-list';
+
+        if (links.length === 0) {
+            listEl.innerHTML = `<p style="padding: 0.8rem; color: var(--text-secondary); font-size: 0.85rem;">Ingen lenker i denne kategorien.</p>`;
+        } else {
+            links.forEach((item, index) => {
+                const linkRow = createLinkRow(item, catName, index, true);
+                listEl.appendChild(linkRow);
+            });
+        }
+
+        bodyEl.appendChild(listEl);
+        itemEl.appendChild(headerEl);
+        itemEl.appendChild(bodyEl);
+        adminAccordionContainer.appendChild(itemEl);
+    });
+}
+
+function createLinkRow(item, category, index, showDelete = false) {
     const a = document.createElement('a');
     a.className = 'link-row';
     a.href = item.url;
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
 
-    // Henter standard favicon fra Google som reserve
     let domain = '';
     try { domain = new URL(item.url).hostname; } catch(e) {}
     const defaultFavicon = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=32` : '';
-    
-    // Bruker lokalt ikon fra "ikon/" om det finnes, ellers Google sin
     const iconUrl = item.icon || defaultFavicon;
 
     const tagsHtml = (item.tags || []).map(t => `<span class="tag">#${t}</span>`).join('');
 
     let deleteBtnHtml = '';
-    if (currentUser && currentUser.isAdmin && currentCategory === 'Admin') {
+    if (showDelete && currentUser && currentUser.isAdmin) {
         deleteBtnHtml = `<button class="btn btn-danger btn-sm" onclick="deleteLink('${category}', ${index}, event)">Slett</button>`;
     }
 
     a.innerHTML = `
         <div class="link-left">
-            <img class="link-favicon" src="${iconUrl}" alt="" onerror="this.src='${defaultFavicon}'">
+            <img class="link-favicon" src="${iconUrl}" alt="" onerror="this.onerror=null; this.src='${defaultFavicon}';">
             <div class="link-info">
                 <span class="link-title">${item.title}</span>
                 <span class="link-desc">${item.description || item.url}</span>
@@ -384,6 +434,7 @@ function handleAddLink(e) {
     const cat = document.getElementById('newCategory').value;
     const title = document.getElementById('newTitle').value.trim();
     const url = document.getElementById('newUrl').value.trim();
+    const icon = document.getElementById('newIcon').value.trim();
     const desc = document.getElementById('newDesc').value.trim();
     const tagsRaw = document.getElementById('newTags').value.trim();
 
@@ -393,12 +444,15 @@ function handleAddLink(e) {
         activeData[cat] = [];
     }
 
-    activeData[cat].push({ title, url, description: desc, tags });
+    const newLinkObj = { title, url, description: desc, tags };
+    if (icon) newLinkObj.icon = icon;
+
+    activeData[cat].push(newLinkObj);
     localStorage.setItem('myLinkData', JSON.stringify(activeData));
     
     addLinkForm.reset();
-    updateExportCode();
-    alert(`Lenken "${title}" ble lagt til i kategorien ${cat}!`);
+    renderAdminAccordion();
+    alert(`Lenken "${title}" ble lagt til! Trykk "Eksporter kode" øverst når du er ferdig for å lagre til GitHub.`);
 }
 
 function deleteLink(cat, index, e) {
@@ -407,8 +461,7 @@ function deleteLink(cat, index, e) {
     if (confirm('Er du sikker på at du vil slette denne lenken?')) {
         activeData[cat].splice(index, 1);
         localStorage.setItem('myLinkData', JSON.stringify(activeData));
-        renderAccordion();
-        updateExportCode();
+        renderAdminAccordion();
     }
 }
 

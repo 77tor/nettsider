@@ -108,53 +108,72 @@
                 <!-- Nedtrekksmenyer (Accordion) -->
                 <div id="accordionContainer" class="accordion-container"></div>
 
-                <!-- Admin område -->
-                <div id="adminArea" style="display: none;">
-                    <div id="adminPanel" class="admin-card">
-                        <h2 style="margin-bottom: 1.5rem;">Administrer Lenker</h2>
-
-                        <form id="addLinkForm" style="margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem;">
-                            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Legg til ny lenke</h3>
-                            <div class="form-group">
-                                <label>Kategori</label>
-                                <select id="newCategory" class="form-select">
-                                    <option value="Lesing">Lesing</option>
-                                    <option value="Regning">Regning</option>
-                                    <option value="Andre fag">Andre fag</option>
-                                    <option value="Oppg. for utskrift">Oppg. for utskrift</option>
-                                    <option value="Oppg. for nett">Oppg. for nett</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Tittel</label>
-                                <input type="text" id="newTitle" class="form-input" required placeholder="F.eks. Skrivesenteret">
-                            </div>
-                            <div class="form-group">
-                                <label>Nettadresse (URL)</label>
-                                <input type="url" id="newUrl" class="form-input" required placeholder="https://...">
-                            </div>
-                            <div class="form-group">
-                                <label>Beskrivelse</label>
-                                <input type="text" id="newDesc" class="form-input" placeholder="Kort beskrivelse...">
-                            </div>
-                            <div class="form-group">
-                                <label>Emneknagger / Tags (komma-separert)</label>
-                                <input type="text" id="newTags" class="form-input" placeholder="f.eks. norsk, skriving, oppgaver">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Legg til i samlingen</button>
-                        </form>
-
-                        <div>
-                            <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Lagre endringer til <code>Linkdata.js</code></h3>
-                            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
-                                Kopier koden under og lim den inn i din <code>Linkdata.js</code>-fil for å lagre endringene permanent.
-                            </p>
-                            <textarea id="exportCode" class="form-textarea" rows="8" readonly style="font-family: monospace; font-size: 0.8rem;"></textarea>
-                            <button id="copyExportBtn" class="btn btn-primary btn-sm" style="margin-top: 0.5rem;">Kopier kode</button>
-                        </div>
-                    </div>
+<!-- Admin område -->
+            <div id="adminArea" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                    <h2 style="margin: 0;">🛠️ Administrer Lenker</h2>
+                    <button id="openExportModalBtn" class="btn btn-primary">📋 Eksporter kode til linkdata.js</button>
                 </div>
-            </main>
+
+                <!-- Skjema for å legge til ny lenke -->
+                <div class="admin-card" style="margin-bottom: 2rem;">
+                    <h3>Legg til ny lenke</h3>
+                    <form id="addLinkForm">
+                        <div class="form-group">
+                            <label>Kategori</label>
+                            <select id="newCategory" class="form-select">
+                                <option value="Lesing">Lesing</option>
+                                <option value="Regning">Regning</option>
+                                <option value="Andre fag">Andre fag</option>
+                                <option value="Oppg. for utskrift">Oppg. for utskrift</option>
+                                <option value="Oppg. for nett">Oppg. for nett</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tittel</label>
+                            <input type="text" id="newTitle" class="form-input" placeholder="F.eks. Skrivesenteret" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nettadresse (URL)</label>
+                            <input type="url" id="newUrl" class="form-input" placeholder="https://..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ikon-sti (Valgfri)</label>
+                            <input type="text" id="newIcon" class="form-input" placeholder="ikon/filnavn.png">
+                        </div>
+                        <div class="form-group">
+                            <label>Beskrivelse</label>
+                            <input type="text" id="newDesc" class="form-input" placeholder="Kort beskrivelse...">
+                        </div>
+                        <div class="form-group">
+                            <label>Emneknagger / Tags (komma-separert)</label>
+                            <input type="text" id="newTags" class="form-input" placeholder="f.eks. norsk, skriving, oppgaver">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Legg til i samlingen</button>
+                    </form>
+                </div>
+
+                <!-- Samling med lenker (Trekkspill i Admin) -->
+                <h3 style="margin-bottom: 1rem;">Lenkebehandling (Slett lenker)</h3>
+                <div id="adminAccordionContainer" class="accordion-container"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL FOR EKSPORT AV KODE -->
+    <div id="exportModal" class="auth-overlay" style="display: none;">
+        <div class="auth-card" style="max-width: 650px; width: 90%; text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="margin: 0;">📋 Generert kode for linkdata.js</h3>
+                <button id="closeExportModalBtn" class="btn btn-secondary btn-sm" style="font-size: 1.2rem; line-height: 1;">&times;</button>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                Kopier koden under og lim den inn i din <strong>linkdata.js</strong>-fil på GitHub for å lagre endringene permanent.
+            </p>
+            <textarea id="exportCode" readonly style="width: 100%; height: 260px; font-family: monospace; font-size: 0.8rem; background: #0f172a; color: #38bdf8; border: 1px solid var(--border-color); border-radius: 6px; padding: 0.8rem; resize: vertical; margin-bottom: 1rem;"></textarea>
+            <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+                <button id="copyExportBtn" class="btn btn-primary">Kopier kode</button>
+            </div>
         </div>
     </div>
 
