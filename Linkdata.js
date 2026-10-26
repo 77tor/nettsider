@@ -22,29 +22,25 @@ const linkData = {
             title: "Alle må lese mye",
             url: "https://sites.google.com/ikrs.no/allemalesemye/start",
             description: "Les og løs. Ulike oppgaver med 3 nivåer",
-            tags: ["lesing", "norsk", "barneskole"],
-            icon: "ikon/allemalese.png"
+            tags: ["lesing", "norsk", "barneskole"]
         },
         {
             title: "Lesestrategier",
             url: "https://sites.google.com/ikrs.no/lesestrategier/start",
             description: "Les og løs. Ulike oppgaver med 3 nivåer",
-            tags: ["lesing", "norsk", "barneskole"],
-            icon: "ikon/lesestrategier.png"
+            tags: ["lesing", "norsk", "barneskole"]
         },
         {
             title: "Les og løs",
             url: "https://sites.google.com/ikrs.no/les-og-los/start",
             description: "Les og løs. Ulike oppgaver med 3 nivåer",
-            tags: ["lesing", "norsk", "barneskole"],
-            icon: "ikon/lesoglos.png"
+            tags: ["lesing", "norsk", "barneskole"]
         },
         {
             title: "Salaby Lesehule",
             url: "https://www.salaby.no",
             description: "Digitalt læremiddel med fokus på leseforståelse.",
-            tags: ["salaby", "tekst", "oppgaver"],
-            icon: "ikon/salaby.png"
+            tags: ["salaby", "tekst", "oppgaver"]
         }
     ],
     "Regning": [
@@ -52,15 +48,13 @@ const linkData = {
             title: "Mattelist",
             url: "https://www.mattelist.no",
             description: "Matematikkutfordringer og problemløsing for alle trinn.",
-            tags: ["matematikk", "oppgaver", "logikk"],
-            icon: "ikon/mattelist.png"
+            tags: ["matematikk", "oppgaver", "logikk"]
         },
         {
             title: "Kahn Academy Norge",
             url: "https://nb.khanacademy.org",
             description: "Gratis videoer og øvingsoppgaver i matematikk.",
-            tags: ["video", "gratis", "matte"],
-            icon: "ikon/khan.png"
+            tags: ["video", "gratis", "matte"]
         }
     ],
     "Andre fag": [
@@ -68,15 +62,13 @@ const linkData = {
             title: "NRK Skole",
             url: "https://www.nrk.no/skole",
             description: "Klipparkiv tilpasset læreplanen i samfunnsfag, naturfag osv.",
-            tags: ["video", "samfunnsfag", "naturfag"],
-            icon: "ikon/nrkskole.png"
+            tags: ["video", "samfunnsfag", "naturfag"]
         },
         {
             title: "Naturfag.no",
             url: "https://www.naturfag.no",
             description: "Ressurser, forsøk og aktiviteter for naturfag.",
-            tags: ["forsøk", "naturfag", "aktiviteter"],
-            icon: "ikon/naturfag.png"
+            tags: ["forsøk", "naturfag", "aktiviteter"]
         }
     ],
     "Oppg. for utskrift": [
@@ -84,15 +76,13 @@ const linkData = {
             title: "Oppgavegenerator Math-Drills",
             url: "https://www.math-drills.com",
             description: "Utskriftsvennlige arbeidsark i matematikk (PDF).",
-            tags: ["pdf", "print", "arbeidsark"],
-            icon: "ikon/mathdrills.png"
+            tags: ["pdf", "print", "arbeidsark"]
         },
         {
             title: "Skrivesider for utskrift",
             url: "https://www.kugoo.no",
             description: "Arbeidsark for bokstavtrening og skriving.",
-            tags: ["skriving", "print", "norsk"],
-            icon: "ikon/kugoo.png"
+            tags: ["skriving", "print", "norsk"]
         }
     ],
     "Oppg. for nett": [
@@ -100,15 +90,39 @@ const linkData = {
             title: "Kahoot!",
             url: "https://kahoot.com",
             description: "Spillbaserte quizer og læringsspill.",
-            tags: ["quiz", "interaktiv", "spill"],
-            icon: "ikon/kahoot.png"
+            tags: ["quiz", "interaktiv", "spill"]
         },
         {
             title: "IXL Læring",
             url: "https://no.ixl.com",
             description: "Målrettet ferdighetstrening på nett.",
-            tags: ["interaktiv", "øving", "nett"],
-            icon: "ikon/ixl.png"
+            tags: ["interaktiv", "øving", "nett"]
+        }
+    ],
+    "Admin": [
+        {
+            title: "GSI Grunnskole",
+            url: "https://77tor.github.io/GSI/",
+            description: "Grunnskolens Informasjonssystem",
+            tags: ["admin", "gsi", "skole"]
+        },
+        {
+            title: "iPad Inventar og Database",
+            url: "https://77tor.github.io/ipad/",
+            description: "Oversikt og registrering av iPads",
+            tags: ["ipad", "inventar", "admin"]
+        },
+        {
+            title: "Leirskoleavtale",
+            url: "https://77tor.github.io/leirskoleavtale/",
+            description: "Avtaler og oversikt for leirskole",
+            tags: ["leirskole", "avtaler", "admin"]
+        },
+        {
+            title: "Reg. lokale kartlegginger",
+            url: "https://77tor.github.io/Reg-lokale-kart/",
+            description: "Registrering av kartleggingsprøver",
+            tags: ["kartlegging", "prøver", "admin"]
         }
     ]
 };

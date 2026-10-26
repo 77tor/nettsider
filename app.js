@@ -77,11 +77,11 @@ const previewLoader = document.getElementById('previewLoader');
 
 const adminArea = document.getElementById('adminArea');
 const addLinkForm = document.getElementById('addLinkForm');
-const exportModal = document.getElementById('exportModal');
-const openExportModalBtn = document.getElementById('openExportModalBtn');
-const closeExportModalBtn = document.getElementById('closeExportModalBtn');
+const addModal = document.getElementById('addModal');
+const openAddModalBtn = document.getElementById('openAddModalBtn');
+const closeAddModalBtn = document.getElementById('closeAddModalBtn');
+const generateCodeBtn = document.getElementById('generateCodeBtn');
 const exportCodeTextarea = document.getElementById('exportCode');
-const copyExportBtn = document.getElementById('copyExportBtn');
 
 // Oppstart
 document.addEventListener('DOMContentLoaded', () => {
@@ -174,22 +174,30 @@ function setupEventListeners() {
         hoverPreviewCard.style.top = `${top}px`;
     });
 
-    addLinkForm.addEventListener('submit', handleAddLink);
-
-    // Modal styring
-    openExportModalBtn.addEventListener('click', () => {
+    // Modal for å legge til lenke
+    openAddModalBtn.addEventListener('click', () => {
         updateExportCode();
-        exportModal.style.display = 'flex';
+        addModal.style.display = 'flex';
     });
 
-    closeExportModalBtn.addEventListener('click', () => {
-        exportModal.style.display = 'none';
+    closeAddModalBtn.addEventListener('click', () => {
+        addModal.style.display = 'none';
     });
 
-    copyExportBtn.addEventListener('click', () => {
+    generateCodeBtn.addEventListener('click', () => {
+        addNewLinkToState();
+        updateExportCode();
+    });
+
+    addLinkForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        addNewLinkToState();
+        updateExportCode();
+        
         exportCodeTextarea.select();
         document.execCommand('copy');
-        alert('Koden er kopiert! Lim den inn i din linkdata.js-fil på GitHub.');
+        alert('Koden er kopiert og lagret lokalt! Lim den inn i din linkdata.js-fil på GitHub.');
+        addModal.style.display = 'none';
     });
 }
 
@@ -201,8 +209,11 @@ function showAuthError(msg) {
 function renderAccordion(searchQuery = '') {
     accordionContainer.innerHTML = '';
     
+    // Filtrer ut "Admin"-kategorien fra den vanlige visningen hvis brukeren trykker på "Vis alle temaer"
+    const allCategories = Object.keys(activeData).filter(cat => cat !== 'Admin');
+    
     const categoriesToRender = (currentCategory === 'Alle') 
-        ? Object.keys(activeData) 
+        ? allCategories 
         : [currentCategory];
 
     let hasMatches = false;
@@ -266,50 +277,45 @@ function renderAccordion(searchQuery = '') {
     }
 }
 
-// Rendrer alle kategorier og lenker i Admin-fanen med slette-knapp
+// Rendrer kun Admin-lenkene på Admin-fanen
 function renderAdminAccordion() {
     adminAccordionContainer.innerHTML = '';
     
-    Object.keys(activeData).forEach(catName => {
-        const links = activeData[catName] || [];
+    const catName = "Admin";
+    const links = activeData[catName] || [];
 
-        const itemEl = document.createElement('div');
-        itemEl.className = 'accordion-item open';
+    const itemEl = document.createElement('div');
+    itemEl.className = 'accordion-item open';
 
-        const headerEl = document.createElement('div');
-        headerEl.className = 'accordion-header';
-        headerEl.innerHTML = `
-            <div class="accordion-title">
-                📁 ${catName}
-                <span class="accordion-badge">${links.length} lenker</span>
-            </div>
-            <span class="accordion-icon">▼</span>
-        `;
+    const headerEl = document.createElement('div');
+    headerEl.className = 'accordion-header';
+    headerEl.innerHTML = `
+        <div class="accordion-title">
+            🔐 Admin-ressurser
+            <span class="accordion-badge">${links.length} lenker</span>
+        </div>
+        <span class="accordion-icon">▼</span>
+    `;
 
-        headerEl.addEventListener('click', () => {
-            itemEl.classList.toggle('open');
+    const bodyEl = document.createElement('div');
+    bodyEl.className = 'accordion-body';
+
+    const listEl = document.createElement('div');
+    listEl.className = 'link-list';
+
+    if (links.length === 0) {
+        listEl.innerHTML = `<p style="padding: 0.8rem; color: var(--text-secondary); font-size: 0.85rem;">Ingen admin-lenker ennå.</p>`;
+    } else {
+        links.forEach((item, index) => {
+            const linkRow = createLinkRow(item, catName, index, true);
+            listEl.appendChild(linkRow);
         });
+    }
 
-        const bodyEl = document.createElement('div');
-        bodyEl.className = 'accordion-body';
-
-        const listEl = document.createElement('div');
-        listEl.className = 'link-list';
-
-        if (links.length === 0) {
-            listEl.innerHTML = `<p style="padding: 0.8rem; color: var(--text-secondary); font-size: 0.85rem;">Ingen lenker i denne kategorien.</p>`;
-        } else {
-            links.forEach((item, index) => {
-                const linkRow = createLinkRow(item, catName, index, true);
-                listEl.appendChild(linkRow);
-            });
-        }
-
-        bodyEl.appendChild(listEl);
-        itemEl.appendChild(headerEl);
-        itemEl.appendChild(bodyEl);
-        adminAccordionContainer.appendChild(itemEl);
-    });
+    bodyEl.appendChild(listEl);
+    itemEl.appendChild(headerEl);
+    itemEl.appendChild(bodyEl);
+    adminAccordionContainer.appendChild(itemEl);
 }
 
 function createLinkRow(item, category, index, showDelete = false) {
@@ -429,8 +435,7 @@ function renderRecentLinks() {
     `).join('');
 }
 
-function handleAddLink(e) {
-    e.preventDefault();
+function addNewLinkToState() {
     const cat = document.getElementById('newCategory').value;
     const title = document.getElementById('newTitle').value.trim();
     const url = document.getElementById('newUrl').value.trim();
@@ -438,21 +443,28 @@ function handleAddLink(e) {
     const desc = document.getElementById('newDesc').value.trim();
     const tagsRaw = document.getElementById('newTags').value.trim();
 
+    if (!title || !url) return;
+
     const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()) : [];
 
     if (!activeData[cat]) {
         activeData[cat] = [];
     }
 
-    const newLinkObj = { title, url, description: desc, tags };
-    if (icon) newLinkObj.icon = icon;
+    // Sjekk om lenken allerede finnes
+    const existingIndex = activeData[cat].findIndex(l => l.url === url);
+    const newObj = { title, url, description: desc, tags };
+    if (icon) newObj.icon = icon;
 
-    activeData[cat].push(newLinkObj);
+    if (existingIndex >= 0) {
+        activeData[cat][existingIndex] = newObj;
+    } else {
+        activeData[cat].push(newObj);
+    }
+
     localStorage.setItem('myLinkData', JSON.stringify(activeData));
-    
-    addLinkForm.reset();
-    renderAdminAccordion();
-    alert(`Lenken "${title}" ble lagt til! Trykk "Eksporter kode" øverst når du er ferdig for å lagre til GitHub.`);
+    if (currentCategory === 'Admin') renderAdminAccordion();
+    else renderAccordion();
 }
 
 function deleteLink(cat, index, e) {
@@ -461,7 +473,8 @@ function deleteLink(cat, index, e) {
     if (confirm('Er du sikker på at du vil slette denne lenken?')) {
         activeData[cat].splice(index, 1);
         localStorage.setItem('myLinkData', JSON.stringify(activeData));
-        renderAdminAccordion();
+        if (currentCategory === 'Admin') renderAdminAccordion();
+        else renderAccordion();
     }
 }
 
