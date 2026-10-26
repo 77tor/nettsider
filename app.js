@@ -401,7 +401,8 @@ function createLinkRow(item, category, index, showDelete = false) {
 
 function showHoverPreview(item, event) {
     if (!hoverPreviewCard) return;
-    if (item.url.includes('sites.google.com') || item.url.includes('drive.google.com') || item.url.includes('docs.google.com')) {
+    // Fjernet sites.google.com slik at Google Sites prøver å hente forhåndsvisning
+    if (item.url.includes('drive.google.com') || item.url.includes('docs.google.com')) {
         return;
     }
 
@@ -410,7 +411,7 @@ function showHoverPreview(item, event) {
     
     try {
         const domain = new URL(item.url).hostname;
-        if (hoverFavicon) hoverFavicon.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+        if (hoverFavicon) hoverFavicon.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
     } catch {
         if (hoverFavicon) hoverFavicon.src = '';
     }
