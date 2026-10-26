@@ -1,6 +1,5 @@
 /**
  * Datafil for lenkesamling (linkdata.js)
- * Du kan enkelt legge til nye kategori-objekter eller nye lenker under eksisterende kategorier.
  */
 
 const linkData = {
@@ -9,37 +8,43 @@ const linkData = {
             title: "Leseplan",
             url: "https://sites.google.com/ikrs.no/leseplan/forside",
             description: "Leseplanen til Hånes skole",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
+            icon: "ikon/leseplan.png"
         },
         {
             title: "Lesekurs",
             url: "https://sites.google.com/ikrs.no/lesekurs/start",
             description: "Side med ressurser for lesekurs",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
+            icon: "ikon/lesekurs.png"
         },
         {
             title: "Alle må lese mye",
             url: "https://sites.google.com/ikrs.no/allemalesemye/start",
             description: "Les og løs. Ulike oppgaver med 3 nivåer",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
+            icon: "ikon/allemalese.png"
         },
         {
             title: "Lesestrategier",
             url: "https://sites.google.com/ikrs.no/lesestrategier/start",
             description: "Les og løs. Ulike oppgaver med 3 nivåer",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
+            icon: "ikon/lesestrategier.png"
         },
         {
             title: "Les og løs",
             url: "https://sites.google.com/ikrs.no/les-og-los/start",
             description: "Les og løs. Ulike oppgaver med 3 nivåer",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
+            icon: "ikon/lesoglos.png"
         },
         {
             title: "Salaby Lesehule",
             url: "https://www.salaby.no",
             description: "Digitalt læremiddel med fokus på leseforståelse.",
-            tags: ["salaby", "tekst", "oppgaver"]
+            tags: ["salaby", "tekst", "oppgaver"],
+            icon: "ikon/salaby.png"
         }
     ],
     "Regning": [
@@ -47,13 +52,15 @@ const linkData = {
             title: "Mattelist",
             url: "https://www.mattelist.no",
             description: "Matematikkutfordringer og problemløsing for alle trinn.",
-            tags: ["matematikk", "oppgaver", "logikk"]
+            tags: ["matematikk", "oppgaver", "logikk"],
+            icon: "ikon/mattelist.png"
         },
         {
             title: "Kahn Academy Norge",
             url: "https://nb.khanacademy.org",
             description: "Gratis videoer og øvingsoppgaver i matematikk.",
-            tags: ["video", "gratis", "matte"]
+            tags: ["video", "gratis", "matte"],
+            icon: "ikon/khan.png"
         }
     ],
     "Andre fag": [
@@ -61,13 +68,15 @@ const linkData = {
             title: "NRK Skole",
             url: "https://www.nrk.no/skole",
             description: "Klipparkiv tilpasset læreplanen i samfunnsfag, naturfag osv.",
-            tags: ["video", "samfunnsfag", "naturfag"]
+            tags: ["video", "samfunnsfag", "naturfag"],
+            icon: "ikon/nrkskole.png"
         },
         {
             title: "Naturfag.no",
             url: "https://www.naturfag.no",
             description: "Ressurser, forsøk og aktiviteter for naturfag.",
-            tags: ["forsøk", "naturfag", "aktiviteter"]
+            tags: ["forsøk", "naturfag", "aktiviteter"],
+            icon: "ikon/naturfag.png"
         }
     ],
     "Oppg. for utskrift": [
@@ -75,13 +84,15 @@ const linkData = {
             title: "Oppgavegenerator Math-Drills",
             url: "https://www.math-drills.com",
             description: "Utskriftsvennlige arbeidsark i matematikk (PDF).",
-            tags: ["pdf", "print", "arbeidsark"]
+            tags: ["pdf", "print", "arbeidsark"],
+            icon: "ikon/mathdrills.png"
         },
         {
             title: "Skrivesider for utskrift",
             url: "https://www.kugoo.no",
             description: "Arbeidsark for bokstavtrening og skriving.",
-            tags: ["skriving", "print", "norsk"]
+            tags: ["skriving", "print", "norsk"],
+            icon: "ikon/kugoo.png"
         }
     ],
     "Oppg. for nett": [
@@ -89,13 +100,15 @@ const linkData = {
             title: "Kahoot!",
             url: "https://kahoot.com",
             description: "Spillbaserte quizer og læringsspill.",
-            tags: ["quiz", "interaktiv", "spill"]
+            tags: ["quiz", "interaktiv", "spill"],
+            icon: "ikon/kahoot.png"
         },
         {
             title: "IXL Læring",
             url: "https://no.ixl.com",
             description: "Målrettet ferdighetstrening på nett.",
-            tags: ["interaktiv", "øving", "nett"]
+            tags: ["interaktiv", "øving", "nett"],
+            icon: "ikon/ixl.png"
         }
     ]
 };
