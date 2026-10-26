@@ -149,7 +149,13 @@ const linkData = {
             icon: "ikon/synonym.png"
         }
     ],
-    "Oppg. for nett": [
+    "Verktøy": [
+        {
+            title: "Dashboard",
+            url: "https://77tor.github.io/dashboard/",
+            description: "Skrivebordsskjerm med dagsplan.",
+            tags: ["interaktiv", "øving", "nett"]
+        },
         {
             title: "Kahoot!",
             url: "https://kahoot.com",
@@ -157,35 +163,45 @@ const linkData = {
             tags: ["quiz", "interaktiv", "spill"]
         },
         {
-            title: "IXL Læring",
-            url: "https://no.ixl.com",
-            description: "Målrettet ferdighetstrening på nett.",
-            tags: ["interaktiv", "øving", "nett"]
+            title: "Visma Flyt Timeplan",
+            url: "https://timeplan.visma.com/netSystem/",
+            description: "Logg inn på Visma Flyt Timeplan",
+            tags: ["Verktøy"]
+        },
+        {
+            title: "Logge på hjemmesiden",
+            url: "https://www.minadmin.no/",
+            description: "Logg på Nyweb fo å legge ut ukeplaner, bilder og/eller artikler",
+            tags: ["Verktøy", "Nett"]
         }
+
+
+
+
     ],
     "Admin": [
         {
             title: "GSI Grunnskole",
             url: "https://77tor.github.io/GSI/",
-            description: "Grunnskolens Informasjonssystem",
+            description: "Grunnskolens Informasjonssystem.",
             tags: ["admin", "gsi", "skole"]
         },
         {
             title: "iPad Inventar og Database",
             url: "https://77tor.github.io/ipad/",
-            description: "Oversikt og registrering av iPads",
+            description: "Oversikt og registrering av iPads.",
             tags: ["ipad", "inventar", "admin"]
         },
         {
             title: "Leirskoleavtale",
             url: "https://77tor.github.io/leirskoleavtale/",
-            description: "Avtaler og oversikt for leirskole",
+            description: "Avtaler og oversikt for leirskole.",
             tags: ["leirskole", "avtaler", "admin"]
         },
         {
             title: "Reg. lokale kartlegginger",
             url: "https://77tor.github.io/Reg-lokale-kart/",
-            description: "Registrering av kartleggingsprøver",
+            description: "Registrering av kartleggingsprøver.",
             tags: ["kartlegging", "prøver", "admin"]
         }
     ]
