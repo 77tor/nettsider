@@ -85,7 +85,8 @@ const linkData = {
             title: "Naturfag.no",
             url: "https://www.naturfag.no",
             description: "Ressurser, forsøk og aktiviteter for naturfag.",
-            tags: ["forsøk", "naturfag", "aktiviteter"]
+            tags: ["forsøk", "naturfag", "aktiviteter"],
+            icon: "ikon/naturfag.png"
         }
     ],
     "Oppg. for utskrift": [
