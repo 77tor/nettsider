@@ -26,7 +26,7 @@ const linkData = {
         },
         {
             title: "Lesestrategier",
-            url: "https://sites.google.com/ikrs.no/lesestrategier/start",
+            url: "https://sites.google.com/ikrs.no/lesestrategier/startside",
             description: "Les og løs. Ulike oppgaver med 3 nivåer",
             tags: ["lesing", "norsk", "barneskole"]
         },
@@ -70,7 +70,8 @@ const linkData = {
             title: "NRK Skole",
             url: "https://www.nrk.no/skole",
             description: "Klipparkiv tilpasset læreplanen i samfunnsfag, naturfag osv.",
-            tags: ["video", "samfunnsfag", "naturfag"]
+            tags: ["video", "samfunnsfag", "naturfag"],
+            icon: "ikon/nrk.png"
         },
         {
             title: "Naturfag.no",
