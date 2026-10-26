@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ressurs- og Lenkesamling</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Identity Services SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+    <!-- Gated Access: Innloggingsskjerm for hele siden -->
+    <div id="authOverlay" class="auth-overlay">
+        <div class="auth-card">
+            <h2>Velkommen til Lenkesamlingen</h2>
+            <p>Denne siden er kun tilgjengelig for brukere med en <strong>@ikrs.no</strong> Google-konto.</p>
+            
+            <div id="googleBtnWrapper" class="google-btn-wrapper">
+                <!-- Google Sign-In Knappen rendres her -->
+                <div id="g_id_onload"
+                    data-client_id="DIN_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+                    data-context="signin"
+                    data-ux_mode="popup"
+                    data-callback="handleGoogleSignIn"
+                    data-hd="ikrs.no"
+                    data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin"
+                    data-type="standard"
+                    data-shape="rectangular"
+                    data-theme="outline"
+                    data-text="signin_with"
+                    data-size="large"
+                    data-logo_alignment="left">
+                </div>
+            </div>
+
+            <p id="authError" class="auth-error" style="display: none;"></p>
+        </div>
+    </div>
+
+    <!-- Hovedinnhold (skjult inntil godkjent innlogging) -->
+    <div id="appContainer" class="container" style="display: none;">
+        <!-- Topplinje med brukerinfo og logg ut -->
+        <div class="top-controls">
+            <div id="userInfo" class="user-info"></div>
+            <button id="togglePreviewBtn" class="toggle-preview-btn">
+                🖼️ Bildeforhåndsvisning: <span id="previewStatusText" style="color: #38bdf8;">PÅ</span>
+            </button>
+            <button id="globalLogoutBtn" class="toggle-preview-btn btn-danger-text">Logg ut</button>
+        </div>
+
+        <header>
+            <h1>Ressurs- og Lenkesamling</h1>
+            <p>Velg et emne fra menyen eller søk etter lenker</p>
+        </header>
+
+        <!-- Søkefelt -->
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Søk i alle lenker, oppgaver og temaer...">
+        </div>
+
+        <!-- Menylinje / Fane-knapper -->
+        <nav class="nav-tabs" id="categoryTabs">
+            <button class="tab-btn active" data-category="Lesing">Lesing</button>
+            <button class="tab-btn" data-category="Regning">Regning</button>
+            <button class="tab-btn" data-category="Andre fag">Andre fag</button>
+            <button class="tab-btn" data-category="Oppg. for utskrift">Oppg. for utskrift</button>
+            <button class="tab-btn" data-category="Oppg. for nett">Oppg. for nett</button>
+            <button class="tab-btn admin-tab" id="adminTabBtn" data-category="Admin" style="display: none;">🔒 Admin</button>
+        </nav>
+
+        <!-- Siste 5 besøkte lenker -->
+        <div class="recent-section" id="recentSection">
+            <h3>Siste 5 besøkte lenker</h3>
+            <div class="recent-links-list" id="recentLinksList">
+                <span style="color: var(--text-secondary); font-size: 0.85rem;">Ingen nylig besøkte lenker ennå.</span>
+            </div>
+        </div>
+
+        <!-- Innholdsområde for lenkekort -->
+        <main id="cardsGrid" class="cards-grid">
+            <!-- Kortene genereres dynamisk med JavaScript -->
+        </main>
+
+        <!-- Admin område -->
+        <div id="adminArea" style="display: none;">
+            <div id="adminPanel" class="admin-card" style="max-width: 800px;">
+                <h2 style="margin-bottom: 1.5rem;">Administrer Lenker</h2>
+
+                <!-- Skjema for ny lenke -->
+                <form id="addLinkForm" style="margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem;">
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Legg til ny lenke</h3>
+                    <div class="form-group">
+                        <label>Kategori</label>
+                        <select id="newCategory" class="form-select">
+                            <option value="Lesing">Lesing</option>
+                            <option value="Regning">Regning</option>
+                            <option value="Andre fag">Andre fag</option>
+                            <option value="Oppg. for utskrift">Oppg. for utskrift</option>
+                            <option value="Oppg. for nett">Oppg. for nett</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tittel</label>
+                        <input type="text" id="newTitle" class="form-input" required placeholder="F.eks. Skrivesenteret">
+                    </div>
+                    <div class="form-group">
+                        <label>Nettadresse (URL)</label>
+                        <input type="url" id="newUrl" class="form-input" required placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label>Beskrivelse</label>
+                        <input type="text" id="newDesc" class="form-input" placeholder="Kort beskrivelse...">
+                    </div>
+                    <div class="form-group">
+                        <label>Emneknagger / Tags (komma-separert)</label>
+                        <input type="text" id="newTags" class="form-input" placeholder="f.eks. norsk, skriving, oppgaver">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Legg til i samlingen</button>
+                </form>
+
+                <!-- Eksportermulighet for å lagre til linkdata.js -->
+                <div>
+                    <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Lagre endringer til <code>linkdata.js</code></h3>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
+                        Kopier koden under og lim den inn i din <code>linkdata.js</code>-fil for å lagre endringene permanent.
+                    </p>
+                    <textarea id="exportCode" class="form-textarea" rows="8" readonly style="font-family: monospace; font-size: 0.8rem;"></textarea>
+                    <button id="copyExportBtn" class="btn btn-primary btn-sm" style="margin-top: 0.5rem;">Kopier kode</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flytende forhåndsvisningsvindu -->
+    <div id="hoverPreviewCard" class="hover-preview-card">
+        <div class="hover-preview-header">
+            <img id="hoverFavicon" class="hover-favicon" src="" alt="icon">
+            <div id="hoverTitle" class="hover-title">Nettside tittel</div>
+        </div>
+        <div class="preview-container">
+            <div id="previewLoader" class="loader-overlay">
+                <div class="spinner"></div>
+                <span>Henter forhåndsvisning...</span>
+            </div>
+            <img id="hoverImage" class="preview-image" src="" alt="Forhåndsvisning">
+            <iframe id="hoverIframe" class="preview-iframe"></iframe>
+        </div>
+        <div id="hoverUrl" class="hover-url">https://example.com</div>
+    </div>
+
+    <!-- Nederste URL Bar -->
+    <div id="urlPreviewBar" class="url-preview-bar">
+        <span>Hold musen over en lenke for å se nettadressen her...</span>
+    </div>
+
+    <script src="linkdata.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
