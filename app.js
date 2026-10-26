@@ -266,9 +266,13 @@ function createLinkRow(item, category, index) {
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
 
+    // Henter standard favicon fra Google som reserve
     let domain = '';
     try { domain = new URL(item.url).hostname; } catch(e) {}
-    const faviconUrl = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=32` : '';
+    const defaultFavicon = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=32` : '';
+    
+    // Bruker lokalt ikon fra "ikon/" om det finnes, ellers Google sin
+    const iconUrl = item.icon || defaultFavicon;
 
     const tagsHtml = (item.tags || []).map(t => `<span class="tag">#${t}</span>`).join('');
 
@@ -279,7 +283,7 @@ function createLinkRow(item, category, index) {
 
     a.innerHTML = `
         <div class="link-left">
-            <img class="link-favicon" src="${faviconUrl}" alt="">
+            <img class="link-favicon" src="${iconUrl}" alt="" onerror="this.src='${defaultFavicon}'">
             <div class="link-info">
                 <span class="link-title">${item.title}</span>
                 <span class="link-desc">${item.description || item.url}</span>
