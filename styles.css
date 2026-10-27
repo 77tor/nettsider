@@ -49,8 +49,22 @@ body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Ro
 .accordion-badge { background: rgba(56, 189, 248, 0.15); color: var(--accent-blue); font-size: 0.72rem; padding: 0.1rem 0.5rem; border-radius: 10px; font-weight: 500; }
 .accordion-icon { font-size: 0.8rem; color: var(--text-secondary); transition: transform 0.3s ease; }
 .accordion-item.open .accordion-icon { transform: rotate(180deg); }
+
 .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0, 1, 0, 1); background: rgba(15, 23, 42, 0.3); }
-.accordion-item.open .accordion-body { max-height: 2000px; transition: max-height 0.3s cubic-bezier(1, 0, 1, 0); }
+
+/* Låser høyden på den åpne mappen og aktiverer intern scrolling */
+.accordion-item.open .accordion-body { 
+    max-height: calc(100vh - 260px); 
+    overflow-y: auto; 
+    transition: max-height 0.3s cubic-bezier(1, 0, 1, 0); 
+}
+
+/* Tilpasset stilig rullefelt for mappen */
+.accordion-body::-webkit-scrollbar { width: 6px; }
+.accordion-body::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.5); border-radius: 4px; }
+.accordion-body::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+.accordion-body::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
+
 .link-list { display: flex; flex-direction: column; padding: 0.4rem 0.8rem 0.8rem 0.8rem; }
 .link-row { display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 0.8rem; border-radius: 6px; text-decoration: none; color: inherit; transition: background 0.2s ease; border-bottom: 1px solid rgba(255, 255, 255, 0.02); }
 .link-row:last-child { border-bottom: none; }
