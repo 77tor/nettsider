@@ -171,6 +171,20 @@ const linkData = {
             icon: "ikon/dash.svg"
         },
         {
+            title: "Kartleggingsside",
+            url: "https://sites.google.com/ikrs.no/kartlegging/home",
+            description: "Side med kartlegginger og eksempler.",
+            tags: ["interaktiv", "kartlegging", "nett"],
+            icon: "ikon/kartside.svg"
+        },
+        {
+            title: "Skoleregler",
+            url: "https://sites.google.com/ikrs.no/regler",
+            description: "Side med kartlegginger og eksempler.",
+            tags: ["interaktiv", "Sosialt", "nett"],
+            icon: "ikon/regler.svg"
+        },
+        {
             title: "Kahoot!",
             url: "https://kahoot.com",
             description: "Spillbaserte quizer og læringsspill.",
