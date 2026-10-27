@@ -188,7 +188,7 @@ const linkData = {
         {
             title: "Skoleregler",
             url: "https://sites.google.com/ikrs.no/regler",
-            description: "Side med kartlegginger og eksempler.",
+            description: "Side med skolereglene for Hånes skole.",
             tags: ["interaktiv", "Sosialt", "nett"],
             icon: "ikon/regler.png",
             previewImage: "side/regler.png"
