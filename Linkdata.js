@@ -88,7 +88,8 @@ const linkData = {
             url: "https://www.nrk.no/skole",
             description: "Klipparkiv tilpasset læreplanen i samfunnsfag, naturfag osv.",
             tags: ["video", "samfunnsfag", "naturfag"],
-            icon: "ikon/nrk.png"
+            icon: "ikon/nrk.png",
+            previewImage: "side/nrkskole.png"
         },
         {
             title: "Naturfag.no",
