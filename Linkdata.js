@@ -22,7 +22,8 @@ const linkData = {
             title: "Alle må lese mye",
             url: "https://sites.google.com/ikrs.no/allemalesemye/start",
             description: "Les og løs. Ulike oppgaver med 3 nivåer",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
+            icon: "ikon/lesmye.png"
         },
         {
             title: "Lesestrategier",
