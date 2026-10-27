@@ -82,8 +82,6 @@ const linkData = {
             icon: "ikon/mpluss.png",
             previewImage: "side/mpluss.png"
         },
-
-https://app.mpluss.no/index.html
         {
             title: "Matematikk.org",
             url: "https://www.matematikk.org/",
