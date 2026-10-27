@@ -177,7 +177,8 @@ const linkData = {
             url: "https://sites.google.com/ikrs.no/kartlegging/home",
             description: "Side med kartlegginger og eksempler.",
             tags: ["interaktiv", "kartlegging", "nett"],
-            icon: "ikon/kartside.png"
+            icon: "ikon/kartside.png",
+            previewImage: "side/kartside.png"
         },
         {
             title: "Skoleregler",

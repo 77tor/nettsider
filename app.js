@@ -1,6 +1,6 @@
 // --- ALL TILSTAND OG VARIABLER ÅPNES ØVERST FOR Å UNNGÅ REFERENCEERROR ---
 let currentCategory = "Alle";
-let activeData = (typeof linkData !== 'undefined') ? (JSON.parse(localStorage.getItem('myLinkData')) || linkData) : {};
+let activeData = (typeof linkData !== 'undefined') ? linkData : {};
 let currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || null;
 let previewEnabled = true;
 
@@ -57,7 +57,7 @@ let adminArea, addLinkForm, addModal, openAddModalBtn, closeAddModalBtn, generat
 document.addEventListener('DOMContentLoaded', () => {
     // Hvis linkData ble lastet inn etter app.js
     if (Object.keys(activeData).length === 0 && typeof linkData !== 'undefined') {
-        activeData = JSON.parse(localStorage.getItem('myLinkData')) || linkData;
+        activeData = linkData;
     }
 
     // Koble opp DOM Elementer
@@ -218,8 +218,10 @@ function setupEventListeners() {
             addNewLinkToState();
             updateExportCode();
             
-            exportCodeTextarea.select();
-            document.execCommand('copy');
+            if (exportCodeTextarea) {
+                exportCodeTextarea.select();
+                document.execCommand('copy');
+            }
             alert('Koden er kopiert og lagret lokalt! Lim den inn i din linkdata.js-fil på GitHub.');
             if (addModal) addModal.style.display = 'none';
         });
@@ -411,29 +413,35 @@ function showHoverPreview(item, event) {
     try {
         const domain = new URL(item.url).hostname;
         const defaultFavicon = domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=64` : '';
-        // Bruker ditt eget lokalt definerte ikon hvis det finnes, ellers Google
         if (hoverFavicon) hoverFavicon.src = item.icon || defaultFavicon;
     } catch {
         if (hoverFavicon) hoverFavicon.src = '';
     }
 
-    if (previewLoader) previewLoader.style.opacity = '1';
     if (hoverImage) hoverImage.style.display = 'block';
     if (hoverIframe) hoverIframe.style.display = 'none';
 
-    const screenshotUrl = `https://api.microlink.io/?url=${encodeURIComponent(item.url)}&screenshot=true&embed=screenshot.url`;
-    if (hoverImage) hoverImage.src = screenshotUrl;
+    // 1. Hvis et eget forhåndsvisningsbilde er oppgitt (f.eks. side/kartside.png)
+    if (item.previewImage) {
+        if (previewLoader) previewLoader.style.opacity = '0';
+        if (hoverImage) hoverImage.src = item.previewImage;
+    } else {
+        // 2. Ellers hents automatisk skjermbilde via Microlink
+        if (previewLoader) previewLoader.style.opacity = '1';
+        const screenshotUrl = `https://api.microlink.io/?url=${encodeURIComponent(item.url)}&screenshot=true&embed=screenshot.url`;
+        if (hoverImage) hoverImage.src = screenshotUrl;
 
-    if (hoverImage) {
-        hoverImage.onload = () => { if (previewLoader) previewLoader.style.opacity = '0'; };
-        hoverImage.onerror = () => {
-            hoverImage.style.display = 'none';
-            if (hoverIframe) {
-                hoverIframe.style.display = 'block';
-                hoverIframe.src = item.url;
-            }
-            if (previewLoader) previewLoader.style.opacity = '0';
-        };
+        if (hoverImage) {
+            hoverImage.onload = () => { if (previewLoader) previewLoader.style.opacity = '0'; };
+            hoverImage.onerror = () => {
+                hoverImage.style.display = 'none';
+                if (hoverIframe) {
+                    hoverIframe.style.display = 'block';
+                    hoverIframe.src = item.url;
+                }
+                if (previewLoader) previewLoader.style.opacity = '0';
+            };
+        }
     }
 
     hoverPreviewCard.style.left = `${event.clientX + 15}px`;
@@ -480,6 +488,7 @@ function addNewLinkToState() {
     const titleEl = document.getElementById('newTitle');
     const urlEl = document.getElementById('newUrl');
     const iconEl = document.getElementById('newIcon');
+    const previewImgEl = document.getElementById('newPreviewImage');
     const descEl = document.getElementById('newDesc');
     const tagsEl = document.getElementById('newTags');
 
@@ -489,12 +498,13 @@ function addNewLinkToState() {
     const title = titleEl.value.trim();
     const url = urlEl.value.trim();
     const icon = iconEl ? iconEl.value.trim() : '';
+    const previewImage = previewImgEl ? previewImgEl.value.trim() : '';
     const desc = descEl ? descEl.value.trim() : '';
     const tagsRaw = tagsEl ? tagsEl.value.trim() : '';
 
     if (!title || !url) return;
 
-    const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()) : [];
+    const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
 
     if (!activeData[cat]) {
         activeData[cat] = [];
@@ -502,7 +512,9 @@ function addNewLinkToState() {
 
     const existingIndex = activeData[cat].findIndex(l => l.url === url);
     const newObj = { title, url, description: desc, tags };
+    
     if (icon) newObj.icon = icon;
+    if (previewImage) newObj.previewImage = previewImage;
 
     if (existingIndex >= 0) {
         activeData[cat][existingIndex] = newObj;
@@ -529,6 +541,29 @@ function deleteLink(cat, index, e) {
 function updateExportCode() {
     if (!exportCodeTextarea) return;
     const adminList = typeof ADMIN_EMAILS !== 'undefined' ? ADMIN_EMAILS : ["77tor@ikrs.no", "tor.skarprud@gmail.com"];
-    const code = `const linkData = ${JSON.stringify(activeData, null, 4)};\n\nconst ADMIN_EMAILS = ${JSON.stringify(adminList, null, 4)};`;
+    
+    let code = `/**\n * Datafil for lenkesamling (linkdata.js)\n */\n\nconst linkData = {\n`;
+    
+    const categories = Object.keys(activeData);
+    categories.forEach((cat, catIdx) => {
+        code += `    "${cat}": [\n`;
+        activeData[cat].forEach((item, itemIdx) => {
+            code += `        {\n`;
+            code += `            title: ${JSON.stringify(item.title)},\n`;
+            code += `            url: ${JSON.stringify(item.url)},\n`;
+            code += `            description: ${JSON.stringify(item.description || '')},\n`;
+            code += `            tags: ${JSON.stringify(item.tags || [])}`;
+            if (item.icon) {
+                code += `,\n            icon: ${JSON.stringify(item.icon)}`;
+            }
+            if (item.previewImage) {
+                code += `,\n            previewImage: ${JSON.stringify(item.previewImage)}`;
+            }
+            code += `\n        }${itemIdx < activeData[cat].length - 1 ? ',' : ''}\n`;
+        });
+        code += `    ]${catIdx < categories.length - 1 ? ',' : ''}\n`;
+    });
+
+    code += `};\n\nconst ADMIN_EMAILS = ${JSON.stringify(adminList, null, 4)};\n`;
     exportCodeTextarea.value = code;
 }
