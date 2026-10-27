@@ -29,7 +29,8 @@ const linkData = {
             title: "Lesestrategier",
             url: "https://sites.google.com/ikrs.no/lesestrategier/startside",
             description: "Les og løs. Ulike oppgaver med 3 nivåer",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
+            icon: "ikon/strategier.png"
         },
         {
             title: "Les og løs",
