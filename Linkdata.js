@@ -209,6 +209,20 @@ const linkData = {
             icon: "ikon/kahoot.png"
         },
         {
+            title: "Gynzy",
+            url: "https://teacher.gynzy.com/no/board/",
+            description: "Skrivebordsskjerm med mange valg.",
+            tags: ["quiz", "interaktiv", "spill"],
+            icon: "ikon/gynzy.png"
+        },
+        {
+            title: "Canva",
+            url: "https://www.canva.com/nb_no/",
+            description: "Grafisk designverktøy på nett.",
+            tags: ["quiz", "interaktiv", "utvikling"],
+            icon: "ikon/canva.png"
+        },
+        {
             title: "Visma Flyt Timeplan",
             url: "https://timeplan.visma.com/netSystem/",
             description: "Logg inn på Visma Flyt Timeplan",
