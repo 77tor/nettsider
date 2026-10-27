@@ -345,11 +345,10 @@ function renderAdminAccordion() {
 }
 
 function createLinkRow(item, category, index, showDelete = false) {
-    const a = document.createElement('a');
+    // Endret fra <a> til <div> for å unngå nettleserens overlappende adressefelt nede i hjørnet
+    const a = document.createElement('div');
     a.className = 'link-row';
-    a.href = item.url;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
+    a.style.cursor = 'pointer';
 
     // Stilrent, innebygd fallback-ikon (SVG-lenke i en sirkel/firkant)
     const fallbackSVG = `data:image/svg+xml;utf8,` + encodeURIComponent(`
@@ -394,8 +393,10 @@ function createLinkRow(item, category, index, showDelete = false) {
         hideHoverPreview();
     });
 
+    // Åpner lenken i ny fane ved klikk og registrerer den som sist besøkt
     a.addEventListener('click', () => {
         addRecentLink(item);
+        window.open(item.url, '_blank', 'noopener,noreferrer');
     });
 
     return a;
