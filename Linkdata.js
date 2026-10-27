@@ -9,34 +9,39 @@ const linkData = {
             url: "https://sites.google.com/ikrs.no/leseplan/forside",
             description: "Leseplanen til Hånes skole",
             tags: ["lesing", "norsk", "barneskole"],
-            icon: "ikon/leseplan.png"
+            icon: "ikon/leseplan.png",
+            previewImage: "side/leseplan.png"
         },
         {
             title: "Lesekurs",
             url: "https://sites.google.com/ikrs.no/lesekurs/start",
             description: "Side med ressurser for lesekurs.",
             tags: ["lesing", "norsk", "barneskole"],
-            icon: "ikon/lesekurs.png"
+            icon: "ikon/lesekurs.png",
+            previewImage: "side/lesekurs.png"
         },
         {
             title: "Alle må lese mye",
             url: "https://sites.google.com/ikrs.no/allemalesemye/start",
             description: "Les og løs. Ulike oppgaver med 3 nivåer.",
             tags: ["lesing", "norsk", "barneskole"],
-            icon: "ikon/lesmye.png"
+            icon: "ikon/lesmye.png",
+            previewImage: "side/lesmye.png"
         },
         {
             title: "Lesestrategier",
             url: "https://sites.google.com/ikrs.no/lesestrategier/startside",
             description: "Les og løs. Ulike oppgaver med 3 nivåer.",
             tags: ["lesing", "norsk", "barneskole"],
-            icon: "ikon/strategier.png"
+            icon: "ikon/strategier.png",
+            previewImage: "side/strategier.png"
         },
         {
             title: "Les og løs",
             url: "https://sites.google.com/ikrs.no/les-og-los/start",
             description: "Les og løs. Hefter med ulike nivåer.",
-            tags: ["lesing", "norsk", "barneskole"]
+            tags: ["lesing", "norsk", "barneskole"],
+            previewImage: "side/leslos.png"
         },
         {
             title: "Oppgavegenerator",
