@@ -213,14 +213,16 @@ const linkData = {
             url: "https://teacher.gynzy.com/no/board/",
             description: "Skrivebordsskjerm med mange valg.",
             tags: ["quiz", "interaktiv", "spill"],
-            icon: "ikon/gynzy.png"
+            icon: "ikon/gynzy.png",
+            previewImage: "side/gynzy.png"
         },
         {
             title: "Canva",
             url: "https://www.canva.com/nb_no/",
             description: "Grafisk designverktøy på nett.",
             tags: ["quiz", "interaktiv", "utvikling"],
-            icon: "ikon/canva.png"
+            icon: "ikon/canva.png",
+            previewImage: "side/canva.png"
         },
         {
             title: "Visma Flyt Timeplan",
