@@ -192,6 +192,14 @@ const linkData = {
             description: "Arbeid med synonymer",
             tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/synonym.png"
+        },
+        {
+            title: "M+",
+            url: "https://app.mpluss.no/index.html",
+            description: "Generere arbeidsark i matematikk.",
+            tags: ["matematikk", "oppgaver", "logikk"],
+            icon: "ikon/mpluss.png",
+            previewImage: "side/mpluss.png"
         }
     ],
     "Verktøy": [
