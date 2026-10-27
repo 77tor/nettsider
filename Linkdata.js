@@ -185,14 +185,16 @@ const linkData = {
             url: "https://sites.google.com/ikrs.no/regler",
             description: "Side med kartlegginger og eksempler.",
             tags: ["interaktiv", "Sosialt", "nett"],
-            icon: "ikon/regler.png"
+            icon: "ikon/regler.png",
+            previewImage: "side/regler.png"
         },
         {
             title: "Egne nett-ressurser",
             url: "https://sites.google.com/ikrs.no/egnenett-ressurser/start",
             description: "Samleside for flere lokale nettsider.",
             tags: ["interaktiv", "Kartlegging", "nett"],
-            icon: "ikon/nettressurser.png"
+            icon: "ikon/nettressurser.png",
+            previewImage: "side/nettressurser.png"
         },
         {
             title: "Kahoot!",
