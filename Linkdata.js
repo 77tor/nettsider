@@ -95,6 +95,21 @@ const linkData = {
             description: "Ressurser, forsøk og aktiviteter for naturfag.",
             tags: ["forsøk", "naturfag", "aktiviteter"],
             icon: "ikon/naturfag.png"
+        },
+        {
+            title: "Korartí",
+            url: "https://www.korarti.no/",
+            description: "Ressurser for sang.",
+            tags: ["sang", "musikk"],
+            icon: "ikon/korarti.png",
+            previewImage: "side/korarti.png"
+        },
+        {
+            title: "Salaby",
+            url: "https://www.salaby.no",
+            description: "Digitalt læremiddel.",
+            tags: ["salaby", "tekst", "oppgaver"],
+            icon: "ikon/salaby.png"
         }
     ],
     "Oppg. for utskrift": [
