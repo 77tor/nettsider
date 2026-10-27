@@ -75,6 +75,16 @@ const linkData = {
             icon: "ikon/gruble.png"
         },
         {
+            title: "M+",
+            url: "https://app.mpluss.no/index.html",
+            description: "Generere arbeidsark i matematikk.",
+            tags: ["matematikk", "oppgaver", "logikk"],
+            icon: "ikon/mpluss.png",
+            previewImage: "side/mpluss.png"
+        },
+
+https://app.mpluss.no/index.html
+        {
             title: "Matematikk.org",
             url: "https://www.matematikk.org/",
             description: "Matematikkutfordringer og problemløsing for alle trinn.",
