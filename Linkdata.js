@@ -64,7 +64,8 @@ const linkData = {
             url: "https://www.mattelist.no",
             description: "Matematikkutfordringer og problemløsing for alle trinn.",
             tags: ["matematikk", "oppgaver", "logikk"],
-            icon: "ikon/mattelist.png"
+            icon: "ikon/mattelist.png",
+            previewImage: "side/mattelist.png"
         },
         {
             title: "Gruble.net",
