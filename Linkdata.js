@@ -175,14 +175,14 @@ const linkData = {
             url: "https://sites.google.com/ikrs.no/kartlegging/home",
             description: "Side med kartlegginger og eksempler.",
             tags: ["interaktiv", "kartlegging", "nett"],
-            icon: "ikon/kartside.svg"
+            icon: "ikon/kartside.png"
         },
         {
             title: "Skoleregler",
             url: "https://sites.google.com/ikrs.no/regler",
             description: "Side med kartlegginger og eksempler.",
             tags: ["interaktiv", "Sosialt", "nett"],
-            icon: "ikon/regler.svg"
+            icon: "ikon/regler.png"
         },
         {
             title: "Kahoot!",
