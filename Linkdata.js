@@ -14,34 +14,34 @@ const linkData = {
         {
             title: "Lesekurs",
             url: "https://sites.google.com/ikrs.no/lesekurs/start",
-            description: "Side med ressurser for lesekurs",
+            description: "Side med ressurser for lesekurs.",
             tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/lesekurs.png"
         },
         {
             title: "Alle må lese mye",
             url: "https://sites.google.com/ikrs.no/allemalesemye/start",
-            description: "Les og løs. Ulike oppgaver med 3 nivåer",
+            description: "Les og løs. Ulike oppgaver med 3 nivåer.",
             tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/lesmye.png"
         },
         {
             title: "Lesestrategier",
             url: "https://sites.google.com/ikrs.no/lesestrategier/startside",
-            description: "Les og løs. Ulike oppgaver med 3 nivåer",
+            description: "Les og løs. Ulike oppgaver med 3 nivåer.",
             tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/strategier.png"
         },
         {
             title: "Les og løs",
             url: "https://sites.google.com/ikrs.no/les-og-los/start",
-            description: "Les og løs. Ulike oppgaver med 3 nivåer",
+            description: "Les og løs. Hefter med ulike nivåer.",
             tags: ["lesing", "norsk", "barneskole"]
         },
         {
             title: "Oppgavegenerator",
             url: "https://77tor.github.io/oppgave_generatorer/",
-            description: "Flere ulike oppgavegeneratorer som silhuettord, gitter og ordkjeder",
+            description: "Flere ulike oppgavegeneratorer som silhuettord, gitter og ordkjeder.",
             tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/oppgaver.png"
         },
