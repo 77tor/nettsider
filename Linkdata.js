@@ -124,18 +124,18 @@ const linkData = {
     ],
     "Oppg. for utskrift": [
         {
+            title: "Lesehefte - 1. trinn",
+            url: "https://77tor.github.io/leseark/",
+            description: "Skriv ut høst-lesehefte for 1. trinn",
+            tags: ["lesing", "norsk", "barneskole"],
+            icon: "ikon/leseark.svg"
+        },        
+        {
             title: "Bingo",
             url: "https://77tor.github.io/bingo/",
             description: "Skriv ut bingoark",
             tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/bingo.png"
-        },
-        {
-            title: "Lesehefte - 1. trinn",
-            url: "https://77tor.github.io/leseark/",
-            description: "Skriv ut høst-lesehefte for 1. trinn",
-            tags: ["lesing", "norsk", "barneskole"],
-            icon: "ikon/leseark.png"
         },
         {
             title: "Finn ordet",
