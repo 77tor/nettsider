@@ -131,6 +131,13 @@ const linkData = {
             icon: "ikon/bingo.png"
         },
         {
+            title: "Lesehefte - 1. trinn",
+            url: "https://77tor.github.io/leseark/",
+            description: "Skriv ut høst-lesehefte for 1. trinn",
+            tags: ["lesing", "norsk", "barneskole"],
+            icon: "ikon/leseark.png"
+        },
+        {
             title: "Finn ordet",
             url: "https://77tor.github.io/finn_ordet/",
             description: "Skriv ut ark for å pare bilder og ord",
