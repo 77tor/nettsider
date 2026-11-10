@@ -238,7 +238,7 @@ const linkData = {
             url: "https://77tor.github.io/dagensord/",
             description: "Tankekart for dagens ord.",
             tags: ["interaktiv", "Norsk", "nett"],
-            icon: "ikon/dagensord.png",
+            icon: "ikon/dagensord.svg",
             previewImage: "side/dagensord.png"
         },
         {
