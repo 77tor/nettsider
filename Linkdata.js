@@ -254,7 +254,8 @@ const linkData = {
             url: "https://kahoot.com",
             description: "Spillbaserte quizer og læringsspill.",
             tags: ["quiz", "interaktiv", "spill"],
-            icon: "ikon/kahoot.png"
+            icon: "ikon/kahoot.png",
+            previewImage: "side/kahoot.png"
         },
         {
             title: "Gynzy",
@@ -277,7 +278,8 @@ const linkData = {
             url: "https://timeplan.visma.com/netSystem/",
             description: "Logg inn på Visma Flyt Timeplan",
             tags: ["Verktøy"],
-            icon: "ikon/flyt.png"
+            icon: "ikon/flyt.png",
+            previewImage: "side/visma.png"
         },
         {
             title: "Logge på hjemmesiden",
