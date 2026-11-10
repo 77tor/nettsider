@@ -237,17 +237,17 @@ const linkData = {
             title: "Egne nett-ressurser",
             url: "https://77tor.github.io/dagensord/",
             description: "Tankekart for dagens ord.",
-            tags: ["interaktiv", "Norsk", "nett"],
-            icon: "ikon/dagensord.svg",
-            previewImage: "side/dagensord.png"
+            tags: ["interaktiv", "nett"],
+            icon: "ikon/nettressurser.png",
+            previewImage: "side/nettressurser.png"
         },
         {
             title: "Dagens ord",
             url: "https://sites.google.com/ikrs.no/egnenett-ressurser/start",
             description: "Samleside for flere lokale nettsider.",
-            tags: ["interaktiv", "Kartlegging", "nett"],
-            icon: "ikon/nettressurser.png",
-            previewImage: "side/nettressurser.png"
+            tags: ["interaktiv", "norsk", "nett"],
+            icon: "ikon/dagensord.svg",
+            previewImage: "side/dagensord.png"
         },
         {
             title: "Kahoot!",
