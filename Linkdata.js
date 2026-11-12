@@ -235,7 +235,7 @@ const linkData = {
         },
         {
             title: "Egne nett-ressurser",
-            url: "https://77tor.github.io/dagensord/",
+            url: "https://sites.google.com/ikrs.no/egnenett-ressurser/start",
             description: "Tankekart for dagens ord.",
             tags: ["interaktiv", "nett"],
             icon: "ikon/nettressurser.png",
@@ -243,7 +243,7 @@ const linkData = {
         },
         {
             title: "Dagens ord",
-            url: "https://sites.google.com/ikrs.no/egnenett-ressurser/start",
+            url: "https://77tor.github.io/dagensord/",
             description: "Samleside for flere lokale nettsider.",
             tags: ["interaktiv", "norsk", "nett"],
             icon: "ikon/dagensord.svg",
