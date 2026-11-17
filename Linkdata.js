@@ -129,7 +129,14 @@ const linkData = {
             description: "Skriv ut høst-lesehefte for 1. trinn",
             tags: ["lesing", "norsk", "barneskole"],
             icon: "ikon/leseark.svg"
-        },        
+        },  
+        {
+            title: "Arbeidshefte - 1. trinn",
+            url: "https://77tor.github.io/arbeidshefte-1a/",
+            description: "Skriv ut arbeidshefte for 1. trinn",
+            tags: ["lesing", "norsk", "matte", "barneskole"],
+            icon: "ikon/arbeidsark.svg"
+        },          
         {
             title: "Bingo",
             url: "https://77tor.github.io/bingo/",
