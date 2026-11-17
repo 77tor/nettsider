@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Blå bakgrunnsrundell -->
+  <circle cx="32" cy="32" r="30" fill="#0369a1" />
+  <circle cx="32" cy="32" r="27" fill="none" stroke="#ffffff" stroke-width="1.4" opacity="0.28" />
+
+  <!-- Åpen bok (venstre og høyre side) -->
+  <path d="M 14 21 C 20 19 27 20 32 23 L 32 45 C 27 42 20 41 14 43 Z" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linejoin="round" />
+  <path d="M 50 21 C 44 19 37 20 32 23 L 32 45 C 37 42 44 41 50 43 Z" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linejoin="round" />
+
+  <!-- Kalkulator / regnebrett på venstre bokside -->
+  <rect x="18" y="25" width="10" height="13" rx="1.5" fill="none" stroke="#ffffff" stroke-width="1.8" />
+  <line x1="20.5" y1="28.5" x2="25.5" y2="28.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" />
+  <circle cx="21" cy="32" r="1" fill="#ffffff" />
+  <circle cx="25" cy="32" r="1" fill="#ffffff" />
+  <circle cx="21" cy="35.2" r="1" fill="#ffffff" />
+  <circle cx="25" cy="35.2" r="1" fill="#ffffff" />
+
+  <!-- Blyant skrått over høyre bokside -->
+  <g transform="translate(42, 31) rotate(42)">
+    <rect x="-3" y="-11" width="6" height="16" rx="1" fill="#0369a1" stroke="#ffffff" stroke-width="2" />
+    <polygon points="-3,5 3,5 0,11" fill="#ffffff" />
+    <line x1="-3" y1="-6.5" x2="3" y2="-6.5" stroke="#ffffff" stroke-width="1.6" />
+  </g>
+</svg>
