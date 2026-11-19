@@ -1,9 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#07519b"/>
-  <path d="M8 17 Q21 12 32 20 Q43 12 56 17 L56 49 Q43 44 32 52 Q21 44 8 49Z"
-        fill="#fff" stroke="#d7edff" stroke-width="2.5" stroke-linejoin="round"/>
-  <path d="M32 20 V51" stroke="#9bc9ed" stroke-width="2"/>
-  <path d="M13 23 Q22 20 28 24 M36 24 Q43 20 51 23" fill="none" stroke="#9bc9ed" stroke-width="2" stroke-linecap="round"/>
-  <path d="M23 31 L27 35 L23 39 M41 31 L37 35 L41 39" fill="none" stroke="#07519b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="32" cy="35" r="3" fill="#ffd83d"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <!-- Bakgrunnssirkel -->
+  <circle cx="32" cy="32" r="30" fill="#0369a1" />
+  <!-- Tynn indre sirkel -->
+  <circle cx="32" cy="32" r="26.5" stroke="#ffffff" stroke-width="1.2" stroke-opacity="0.35" />
+
+  <!-- Åpen lesebok -->
+  <path d="M16 23.5C16 22.1 17.1 21 18.5 21H28C30.2 21 32 22.8 32 25V44C32 42.3 30.7 41 29 41H18.5C17.1 41 16 39.9 16 38.5V23.5Z" stroke="#ffffff" stroke-width="2.4" stroke-linejoin="round" />
+  <path d="M48 23.5C48 22.1 46.9 21 45.5 21H36C33.8 21 32 22.8 32 25V44C32 42.3 33.3 41 35 41H45.5C46.9 41 48 39.9 48 38.5V23.5Z" stroke="#ffffff" stroke-width="2.4" stroke-linejoin="round" />
+
+  <!-- Leselinjer på venstre side -->
+  <line x1="20" y1="27" x2="28" y2="27" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+  <line x1="20" y1="31.5" x2="28" y2="31.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+  <line x1="20" y1="36" x2="25.5" y2="36" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+
+  <!-- Leselinjer på høyre side -->
+  <line x1="36" y1="27" x2="44" y2="27" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+  <line x1="36" y1="31.5" x2="44" y2="31.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+  <line x1="36" y1="36" x2="41.5" y2="36" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
 </svg>
